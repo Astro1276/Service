@@ -130,44 +130,64 @@
         </div>
     </section>
 
-    <!-- SECCIÓN DE PRECIOS -->
+    <!-- SECCIÓN DE PRECIOS (Con Plan Intermedio / Efecto Señuelo) -->
     <section id="precios" class="py-20 border-t border-slate-900">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center max-w-3xl mx-auto mb-16">
                 <h2 class="text-3xl font-bold tracking-tight mb-4">Planes sencillos y transparentes</h2>
-                <p class="text-slate-400">Sin comisiones ocultas por pedido. Paga mes a mes o usa la versión gratuita.</p>
+                <p class="text-slate-400">Sin comisiones ocultas por pedido. Elige el nivel ideal para tu negocio.</p>
             </div>
-            <div class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+            <div class="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                
                 <!-- Plan Free -->
                 <div class="bg-slate-900 border border-slate-800 p-8 rounded-3xl flex flex-col justify-between">
                     <div>
                         <h3 class="text-xl font-bold mb-2">Plan Gratuito</h3>
-                        <p class="text-slate-400 text-sm mb-6">Ideal para pequeños puestos que inician.</p>
+                        <p class="text-slate-400 text-sm mb-6">Para pequeños puestos que inician.</p>
                         <div class="text-4xl font-extrabold mb-6">$0 <span class="text-sm font-normal text-slate-400">/ siempre</span></div>
                         <ul class="space-y-3 text-sm text-slate-300 mb-8">
-                            <li class="flex items-center gap-2">✓ Hasta 15 productos activos</li>
+                            <li class="flex items-center gap-2">✓ Hasta 15 productos</li>
                             <li class="flex items-center gap-2">✓ Menú digital básico</li>
-                            <li class="flex items-center gap-2">✓ Código QR estándar</li>
+                            <li class="flex items-center gap-2 text-slate-500">✕ Sin fotos en los platos</li>
+                            <li class="flex items-center gap-2 text-slate-500">✕ Sin botón agotado</li>
                         </ul>
                     </div>
                     <button class="w-full bg-slate-800 hover:bg-slate-700 font-semibold py-3 rounded-xl transition">Empezar Gratis</button>
                 </div>
-                <!-- Plan Premium -->
-                <div class="bg-gradient-to-b from-emerald-500/10 to-slate-900 border border-emerald-500/30 p-8 rounded-3xl flex flex-col justify-between relative shadow-xl">
-                    <div class="absolute -top-3 right-8 bg-emerald-500 text-slate-950 font-bold text-xs uppercase px-3 py-1 rounded-full">Recomendado</div>
+
+                <!-- Plan Emprendedor (Intermedio / El Elegido) -->
+                <div class="bg-gradient-to-b from-emerald-500/15 to-slate-900 border-2 border-emerald-500 p-8 rounded-3xl flex flex-col justify-between relative shadow-2xl scale-105 z-10">
+                    <div class="absolute -top-3.5 right-8 bg-emerald-500 text-slate-950 font-extrabold text-xs uppercase px-3.5 py-1 rounded-full shadow-md">Más Popular</div>
                     <div>
-                        <h3 class="text-xl font-bold mb-2">Plan Premium Local</h3>
-                        <p class="text-slate-400 text-sm mb-6">Para restaurantes que buscan la máxima eficiencia.</p>
-                        <div class="text-4xl font-extrabold mb-6">$10 <span class="text-sm font-normal text-slate-400">/ mes</span></div>
-                        <ul class="space-y-3 text-sm text-slate-300 mb-8">
-                            <li class="flex items-center gap-2">✓ Productos ilimitados</li>
+                        <h3 class="text-xl font-bold mb-2 text-emerald-400">Plan Emprendedor</h3>
+                        <p class="text-slate-400 text-sm mb-6">Todo lo esencial para vender sin límites.</p>
+                        <div class="text-4xl font-extrabold mb-6">$5 <span class="text-sm font-normal text-slate-400">/ mes</span></div>
+                        <ul class="space-y-3 text-sm text-slate-200 mb-8 font-medium">
+                            <li class="flex items-center gap-2 text-emerald-400 font-bold">✓ Productos ilimitados</li>
                             <li class="flex items-center gap-2">✓ Fotos en alta resolución</li>
-                            <li class="flex items-center gap-2">✓ Botón de pedidos a WhatsApp</li>
                             <li class="flex items-center gap-2">✓ Interruptor "Agotado" en 1 clic</li>
+                            <li class="flex items-center gap-2">✓ Código QR descargable</li>
                         </ul>
                     </div>
-                    <button class="w-full bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold py-3 rounded-xl transition shadow-lg shadow-emerald-500/20">Contratar Premium</button>
+                    <button class="w-full bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold py-3.5 rounded-xl transition shadow-lg shadow-emerald-500/25">Elegir Emprendedor</button>
                 </div>
+
+                <!-- Plan Pro / Premium -->
+                <div class="bg-slate-900 border border-slate-800 p-8 rounded-3xl flex flex-col justify-between">
+                    <div>
+                        <h3 class="text-xl font-bold mb-2">Plan Pro Total</h3>
+                        <p class="text-slate-400 text-sm mb-6">Para locales que buscan automatización total.</p>
+                        <div class="text-4xl font-extrabold mb-6">$12 <span class="text-sm font-normal text-slate-400">/ mes</span></div>
+                        <ul class="space-y-3 text-sm text-slate-300 mb-8">
+                            <li class="flex items-center gap-2">✓ Todo lo del Emprendedor</li>
+                            <li class="flex items-center gap-2">✓ Pedidos directos a WhatsApp con carrito</li>
+                            <li class="flex items-center gap-2">✓ Personalización de colores y logo</li>
+                            <li class="flex items-center gap-2">✓ Soporte prioritario 24/7</li>
+                        </ul>
+                    </div>
+                    <button class="w-full bg-slate-800 hover:bg-slate-700 font-semibold py-3 rounded-xl transition">Elegir Pro</button>
+                </div>
+
             </div>
         </div>
     </section>
@@ -219,5 +239,5 @@
     <!-- Enlace al archivo JavaScript -->
     <script src="app.js"></script>
 </body>
-                      </html>
-                      
+    </html>
+    
