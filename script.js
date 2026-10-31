@@ -2,8 +2,8 @@
 // 1. CONFIGURACIÓN DE SUPABASE
 // ==========================================
 // Reemplaza estos valores con la URL y la "anon key" de tu proyecto en Supabase
-const SUPABASE_URL = 'TUS_DATOS_DE_SUPABASE_URL';
-const SUPABASE_ANON_KEY = 'TUS_DATOS_DE_SUPABASE_ANON_KEY';
+const SUPABASE_URL = 'https://bmiweaeaznxxidlyaftu.supabase.co';
+const SUPABASE_ANON_KEY = 'sb_publishable_n7R-U2YdVX7fSYVQN1E_Fw_m4atV42Q';
 
 // Inicializar el cliente de Supabase (asegúrate de incluir el script CDN de Supabase en tu HTML)
 const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
