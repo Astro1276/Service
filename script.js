@@ -1,10 +1,12 @@
 // ==========================================
-// 1. CONFIGURACIÓN DE SUPABASE
+// 1. IMPORTACIÓN Y CONFIGURACIÓN DE SUPABASE
 // ==========================================
+import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
+
 // Reemplaza con tus credenciales reales de tu proyecto en Supabase
 const SUPABASE_URL = 'https://bmiweaeaznxxidlyaftu.supabase.co';
 const SUPABASE_ANON_KEY = 'sb_publishable_n7R-U2YdVX7fSYVQN1E_Fw_m4atV42Q';
-const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 // ==========================================
 // 2. CONTROL DEL MENÚ MÓVIL
@@ -130,7 +132,6 @@ if (authForm) {
 // ==========================================
 async function checkExistingSession() {
     const { data: { session } } = await supabase.auth.getSession();
-    // Si ya hay una sesión activa y estamos en la landing, podemos opcionalmente guiarlo al admin
     if (session && window.location.pathname.includes('index.html')) {
         // Opcional: window.location.href = 'admin.html';
     }
