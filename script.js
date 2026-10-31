@@ -138,3 +138,4 @@ async function checkExistingSession() {
 }
 
 checkExistingSession();
+alert("hi")
