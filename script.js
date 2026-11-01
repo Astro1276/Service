@@ -115,7 +115,7 @@ if (authForm) {
                 if (error) throw error;
 
                 // Redirigir al panel de administración del restaurante
-                window.location.href = 'admin.html';
+                window.location.href = './Admin/admin.html';
             }
         } catch (error) {
             console.error('Error de autenticación:', error.message);
@@ -138,4 +138,3 @@ async function checkExistingSession() {
 }
 
 checkExistingSession();
-alert("hi")
