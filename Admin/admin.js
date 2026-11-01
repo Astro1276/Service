@@ -154,19 +154,18 @@ async function loadProducts(restaurantId) {
 // 6. CONTROL DEL MODAL Y EVENTOS DE PRODUCTOS
 // ==========================================
 const productModal = document.getElementById('productModal');
+const openProductModalBtn = document.getElementById('openProductModalBtn');
 const closeProductModalBtn = document.getElementById('closeProductModalBtn');
 const productForm = document.getElementById('productForm');
 
-// Conectar botón "+ Nuevo Plato" del HTML principal
-document.addEventListener('click', (e) => {
-    if (e.target && e.target.textContent.includes('Nuevo Plato')) {
-        if (currentRestaurant.plan === 'free' && currentProductsCount >= 15) {
-            alert('⚠️ Has alcanzado el límite de 15 productos de tu Plan Gratuito. ¡Actualiza al Plan Emprendedor para tener productos ilimitados!');
-            return;
-        }
-        productModal.classList.remove('hidden');
-        productModal.classList.add('flex');
+// Abrir modal de productos con validación de límite de plan
+openProductModalBtn?.addEventListener('click', () => {
+    if (currentRestaurant.plan === 'free' && currentProductsCount >= 15) {
+        alert('⚠️ Has alcanzado el límite de 15 productos de tu Plan Gratuito. ¡Actualiza al Plan Emprendedor para tener productos ilimitados!');
+        return;
     }
+    productModal.classList.remove('hidden');
+    productModal.classList.add('flex');
 });
 
 closeProductModalBtn?.addEventListener('click', () => {
@@ -213,6 +212,60 @@ if (productForm) {
     });
 }
 
+// ==========================================
+// 7. GESTIÓN DE CATEGORÍAS (MODAL Y CREACIÓN)
+// ==========================================
+const categoryModal = document.getElementById('categoryModal');
+const openCategoryModalBtn = document.getElementById('openCategoryModalBtn');
+const closeCategoryModalBtn = document.getElementById('closeCategoryModalBtn');
+const categoryForm = document.getElementById('categoryForm');
+
+openCategoryModalBtn?.addEventListener('click', () => {
+    categoryModal.classList.remove('hidden');
+    categoryModal.classList.add('flex');
+});
+
+closeCategoryModalBtn?.addEventListener('click', () => {
+    categoryModal.classList.add('hidden');
+    categoryModal.classList.remove('flex');
+    categoryForm.reset();
+});
+
+if (categoryForm) {
+    categoryForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const catName = document.getElementById('catName').value.trim();
+
+        if (!catName || !currentRestaurant) return;
+
+        try {
+            const { error } = await supabase
+                .from('categories')
+                .insert([{
+                    restaurant_id: currentRestaurant.id,
+                    name: catName,
+                    display_order: 0
+                }]);
+
+            if (error) throw error;
+
+            categoryModal.classList.add('hidden');
+            categoryModal.classList.remove('flex');
+            categoryForm.reset();
+
+            await loadCategories(currentRestaurant.id);
+            alert('¡Categoría creada con éxito!');
+
+        } catch (error) {
+            console.error('Error al crear categoría:', error.message);
+            alert('Hubo un error al crear la categoría.');
+        }
+    });
+}
+
+// ==========================================
+// 8. EVENTOS DE TABLA (AGOTADO / ELIMINAR)
+// ==========================================
 function attachProductEvents() {
     // 1. Interruptor Agotado / Disponible
     document.querySelectorAll('.availability-toggle').forEach(toggle => {
@@ -251,12 +304,13 @@ function attachProductEvents() {
 }
 
 // ==========================================
-// 7. CERRAR SESIÓN
+// 9. CERRAR SESIÓN
 // ==========================================
 document.getElementById('logoutBtn')?.addEventListener('click', async () => {
     await supabase.auth.signOut();
-    window.location.href = 'index.html';
+    window.location.href = '../index.html';
 });
 
-// Inicializar
+// Inicializar ejecución
 checkAuthAndLoadData();
+                
