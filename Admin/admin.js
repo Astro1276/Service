@@ -8,23 +8,22 @@ const SUPABASE_ANON_KEY = 'sb_publishable_n7R-U2YdVX7fSYVQN1E_Fw_m4atV42Q';
 
 const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-// Variables globales del restaurante actual
 let currentRestaurant = null;
+let currentProductsCount = 0;
 
 // ==========================================
-// 2. VERIFICACIÓN DE SESIÓN (SEGURIDAD DE RUTA)
+// 2. VERIFICACIÓN DE SESIÓN (SEGURIDAD)
 // ==========================================
 async function checkAuthAndLoadData() {
     const { data: { session }, error } = await supabase.auth.getSession();
 
     if (error || !session) {
-        // Si no hay sesión activa, expulsar al usuario de vuelta al inicio
         window.location.href = 'index.html';
         return;
     }
 
-    // Cargar la información del restaurante vinculado a este usuario (`auth.uid()`)
     await loadRestaurantData(session.user.id);
+    await loadCategories(session.user.id);
     await loadProducts(session.user.id);
 }
 
@@ -40,39 +39,51 @@ async function loadRestaurantData(userId) {
             .single();
 
         if (error) throw error;
-
         currentRestaurant = data;
 
-        // Inyectar datos en el Header y Estadísticas del Panel
         document.getElementById('restaurantTitle').textContent = data.name;
         document.getElementById('restaurantSlug').textContent = `qrdely.com/menu/${data.slug}`;
         document.getElementById('restaurantWhatsappDisplay').textContent = data.whatsapp || 'No configurado';
         
-        // Configurar enlace del menú público
         const publicLink = document.getElementById('publicMenuLink');
-        publicLink.href = `menu.html?slug=${data.slug}`; // (Vista pública que haremos después)
+        publicLink.href = `menu.html?slug=${data.slug}`;
 
-        // Mostrar el plan actual con diseño distintivo
         const planBadge = document.getElementById('planBadge');
         if (data.plan === 'free') {
             planBadge.textContent = 'Plan Gratuito (Máx 15 productos)';
             planBadge.className = 'text-xl font-bold text-slate-300';
-        } else if (data.plan === 'emprendedor') {
+        } else {
             planBadge.textContent = 'Plan Emprendedor (Ilimitado)';
             planBadge.className = 'text-xl font-bold text-emerald-400';
-        } else {
-            planBadge.textContent = 'Plan Pro Total';
-            planBadge.className = 'text-xl font-bold text-teal-400';
         }
-
     } catch (error) {
         console.error('Error al cargar datos del restaurante:', error.message);
-        alert('No se pudo cargar la información del local.');
     }
 }
 
 // ==========================================
-// 4. CARGAR PRODUCTOS Y APLICAR LIMITACIONES
+// 4. CARGAR CATEGORÍAS EN EL SELECTOR DEL MODAL
+// ==========================================
+async function loadCategories(restaurantId) {
+    const categorySelect = document.getElementById('prodCategory');
+    if (!categorySelect) return;
+
+    const { data: categories, error } = await supabase
+        .from('categories')
+        .select('*')
+        .eq('restaurant_id', restaurantId)
+        .order('display_order', { ascending: true });
+
+    if (!error && categories) {
+        categorySelect.innerHTML = '<option value="">Sin categoría principal</option>';
+        categories.forEach(cat => {
+            categorySelect.innerHTML += `<option value="${cat.id}">${cat.name}</option>`;
+        });
+    }
+}
+
+// ==========================================
+// 5. CARGAR PRODUCTOS Y APLICAR LIMITACIONES
 // ==========================================
 async function loadProducts(restaurantId) {
     const tableBody = document.getElementById('productsTableBody');
@@ -87,7 +98,8 @@ async function loadProducts(restaurantId) {
 
         if (error) throw error;
 
-        productCountBadge.textContent = products.length;
+        currentProductsCount = products.length;
+        productCountBadge.textContent = currentProductsCount;
 
         if (products.length === 0) {
             tableBody.innerHTML = `
@@ -99,7 +111,6 @@ async function loadProducts(restaurantId) {
             return;
         }
 
-        // Renderizar tabla de productos
         tableBody.innerHTML = '';
         products.forEach(product => {
             const row = document.createElement('tr');
@@ -107,7 +118,7 @@ async function loadProducts(restaurantId) {
             
             row.innerHTML = `
                 <td class="p-4 flex items-center gap-3">
-                    <div class="w-10 h-10 bg-slate-800 rounded-xl overflow-hidden flex items-center justify-center text-lg font-bold text-slate-400">
+                    <div class="w-10 h-10 bg-slate-800 rounded-xl overflow-hidden flex items-center justify-center text-lg font-bold text-slate-400 shrink-0">
                         ${product.image_url ? `<img src="${product.image_url}" class="w-full h-full object-cover">` : '🍔'}
                     </div>
                     <div>
@@ -132,20 +143,78 @@ async function loadProducts(restaurantId) {
             tableBody.appendChild(row);
         });
 
-        // Activar eventos para los interruptores de "Agotado"
-        attachProductEvents(products.length);
+        attachProductEvents();
 
     } catch (error) {
         console.error('Error al cargar productos:', error.message);
-        tableBody.innerHTML = `<tr><td colspan="4" class="p-8 text-center text-red-400">Error al cargar la carta.</td></tr>`;
     }
 }
 
 // ==========================================
-// 5. EVENTOS DE PRODUCTOS (INTERRUPTOR AGOTADO Y LÍMITES DE PLAN)
+// 6. CONTROL DEL MODAL Y EVENTOS DE PRODUCTOS
 // ==========================================
-function attachProductEvents(currentProductCount) {
-    // 1. Interruptor de disponibilidad (Agotado / Disponible)
+const productModal = document.getElementById('productModal');
+const closeProductModalBtn = document.getElementById('closeProductModalBtn');
+const productForm = document.getElementById('productForm');
+
+// Conectar botón "+ Nuevo Plato" del HTML principal
+document.addEventListener('click', (e) => {
+    if (e.target && e.target.textContent.includes('Nuevo Plato')) {
+        if (currentRestaurant.plan === 'free' && currentProductsCount >= 15) {
+            alert('⚠️ Has alcanzado el límite de 15 productos de tu Plan Gratuito. ¡Actualiza al Plan Emprendedor para tener productos ilimitados!');
+            return;
+        }
+        productModal.classList.remove('hidden');
+        productModal.classList.add('flex');
+    }
+});
+
+closeProductModalBtn?.addEventListener('click', () => {
+    productModal.classList.add('hidden');
+    productModal.classList.remove('flex');
+    productForm.reset();
+});
+
+// Enviar formulario de creación de producto
+if (productForm) {
+    productForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const name = document.getElementById('prodName').value.trim();
+        const price = parseFloat(document.getElementById('prodPrice').value);
+        const category_id = document.getElementById('prodCategory').value || null;
+        const description = document.getElementById('prodDesc').value.trim();
+        const image_url = document.getElementById('prodImage').value.trim();
+
+        try {
+            const { error } = await supabase
+                .from('products')
+                .insert([{
+                    restaurant_id: currentRestaurant.id,
+                    category_id: category_id,
+                    name: name,
+                    price: price,
+                    description: description,
+                    image_url: image_url || null,
+                    is_available: true
+                }]);
+
+            if (error) throw error;
+
+            productModal.classList.add('hidden');
+            productModal.classList.remove('flex');
+            productForm.reset();
+
+            await loadProducts(currentRestaurant.id);
+        } catch (error) {
+            console.error('Error al crear el plato:', error.message);
+            alert('Hubo un error al guardar el plato.');
+        }
+    });
+}
+
+function attachProductEvents() {
+    // 1. Interruptor Agotado / Disponible
     document.querySelectorAll('.availability-toggle').forEach(toggle => {
         toggle.addEventListener('change', async (e) => {
             const productId = e.target.dataset.id;
@@ -154,76 +223,40 @@ function attachProductEvents(currentProductCount) {
 
             statusText.textContent = isAvailable ? 'Disponible' : 'Agotado';
 
-            const { error } = await supabase
+            await supabase
                 .from('products')
                 .update({ is_available: isAvailable })
                 .eq('id', productId);
-
-            if (error) {
-                console.error('Error al actualizar disponibilidad:', error.message);
-                alert('No se pudo actualizar el estado del plato.');
-                e.target.checked = !isAvailable; // Revertir visualmente si falla
-                statusText.textContent = !isAvailable ? 'Disponible' : 'Agotado';
-            }
         });
     });
 
-    // 2. Control de límite de plan en el botón de "+ Nuevo Plato"
-    const newProductBtn = document.querySelector('button[onclick*="Nuevo Plato"]');
-    if (newProductBtn) {
-        // Reemplazar onclick por evento limpio
-        newProductBtn.removeAttribute('onclick');
-        newProductBtn.onclick = () => {
-            // Validar restricción del Plan Gratuito (Máximo 15 productos)
-            if (currentRestaurant.plan === 'free' && currentProductCount >= 15) {
-                alert('⚠️ Has alcanzado el límite de 15 productos de tu Plan Gratuito. ¡Actualiza al Plan Emprendedor por solo $5/mes para tener productos ilimitados!');
-                return;
+    // 2. Botón Eliminar Plato
+    document.querySelectorAll('.delete-btn').forEach(btn => {
+        btn.addEventListener('click', async (e) => {
+            if (!confirm('¿Estás seguro de eliminar este plato de tu menú?')) return;
+            const productId = e.target.dataset.id;
+
+            const { error } = await supabase
+                .from('products')
+                .delete()
+                .eq('id', productId);
+
+            if (!error) {
+                await loadProducts(currentRestaurant.id);
+            } else {
+                alert('No se pudo eliminar el plato.');
             }
-            openProductModal();
-        };
-    }
-}
-
-// Función temporal para simular la apertura del modal de creación de producto
-function openProductModal() {
-    const productName = prompt('Nombre del nuevo plato:');
-    if (!productName) return;
-    const productPrice = prompt('Precio (Ej: 8.50):');
-    if (!productPrice) return;
-
-    createProduct(productName, productPrice);
-}
-
-// Función rápida para insertar el producto respetando el multi-tenant (`restaurant_id`)
-async function createProduct(name, price) {
-    try {
-        const { error } = await supabase
-            .from('products')
-            .insert([{
-                restaurant_id: currentRestaurant.id,
-                name: name,
-                price: parseFloat(price),
-                is_available: true
-            }]);
-
-        if (error) throw error;
-
-        // Recargar la lista de productos
-        await loadProducts(currentRestaurant.id);
-    } catch (error) {
-        console.error('Error al crear producto:', error.message);
-        alert('Hubo un error al agregar el plato.');
-    }
+        });
+    });
 }
 
 // ==========================================
-// 6. CERRAR SESIÓN
+// 7. CERRAR SESIÓN
 // ==========================================
 document.getElementById('logoutBtn')?.addEventListener('click', async () => {
     await supabase.auth.signOut();
-    window.location.href = '../index.html';
+    window.location.href = 'index.html';
 });
 
-// Inicializar verificación al cargar la página del admin
+// Inicializar
 checkAuthAndLoadData();
-      
