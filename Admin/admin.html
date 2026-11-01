@@ -68,7 +68,7 @@
                     <h2 class="text-xl font-bold">Gestión de tu Menú</h2>
                     <p class="text-sm text-slate-400">Agrega platos y controla el interruptor de "Agotado" al instante.</p>
                 </div>
-                <button onclick="alert('Próximamente: Formulario para agregar nuevo plato.')" class="bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold px-5 py-3 rounded-xl transition text-sm shadow-lg shadow-emerald-500/20">
+                <button class="bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold px-5 py-3 rounded-xl transition text-sm shadow-lg shadow-emerald-500/20">
                     + Nuevo Plato
                 </button>
             </div>
@@ -97,13 +97,55 @@
 
     </main>
 
+    <!-- MODAL PARA CREAR NUEVO PLATO -->
+    <div id="productModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-slate-950/80 backdrop-blur-sm p-4">
+        <div class="bg-slate-900 border border-slate-800 w-full max-w-lg p-8 rounded-3xl relative shadow-2xl">
+            <button id="closeProductModalBtn" class="absolute top-6 right-6 text-slate-400 hover:text-white">✕</button>
+            <h3 class="text-2xl font-bold mb-2">Agregar Nuevo Plato</h3>
+            <p class="text-sm text-slate-400 mb-6">Añade un artículo a tu carta digital.</p>
+            
+            <form id="productForm" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">Nombre del Plato *</label>
+                    <input type="text" id="prodName" required class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-sm text-slate-100 focus:outline-none focus:border-emerald-500 transition" placeholder="Ej. Hamburguesa Doble Especial">
+                </div>
+                
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">Precio ($) *</label>
+                        <input type="number" step="0.01" id="prodPrice" required class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-sm text-slate-100 focus:outline-none focus:border-emerald-500 transition" placeholder="8.50">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">Categoría</label>
+                        <select id="prodCategory" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-sm text-slate-100 focus:outline-none focus:border-emerald-500 transition">
+                            <option value="">Sin categoría principal</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">Descripción (Ingredientes / Detalles)</label>
+                    <textarea id="prodDesc" rows="2" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-sm text-slate-100 focus:outline-none focus:border-emerald-500 transition resize-none" placeholder="Carne de res, doble queso cheddar, tocino crujiente..."></textarea>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">URL de la Imagen (Opcional)</label>
+                    <input type="url" id="prodImage" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-sm text-slate-100 focus:outline-none focus:border-emerald-500 transition" placeholder="https://ejemplo.com/foto-hamburguesa.jpg">
+                </div>
+
+                <button type="submit" id="saveProductBtn" class="w-full bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold py-3.5 rounded-xl transition shadow-lg shadow-emerald-500/20">
+                    Guardar Plato
+                </button>
+            </form>
+        </div>
+    </div>
+
     <!-- FOOTER -->
     <footer class="py-6 border-t border-slate-900 text-center text-xs text-slate-500">
         <p>&copy; 2026 QRDely. Panel de Control de Restaurantes.</p>
     </footer>
 
-    <!-- LÓGICA DEL ADMIN (JS incrustado o vinculado) -->
+    <!-- LÓGICA DEL ADMIN -->
     <script type="module" src="admin.js"></script>
 </body>
-              </html>
-              
+</html>
