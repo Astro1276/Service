@@ -66,11 +66,16 @@
             <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
                 <div>
                     <h2 class="text-xl font-bold">Gestión de tu Menú</h2>
-                    <p class="text-sm text-slate-400">Agrega platos y controla el interruptor de "Agotado" al instante.</p>
+                    <p class="text-sm text-slate-400">Agrega platos, organiza categorías y controla el estado al instante.</p>
                 </div>
-                <button class="bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold px-5 py-3 rounded-xl transition text-sm shadow-lg shadow-emerald-500/20">
-                    + Nuevo Plato
-                </button>
+                <div class="flex flex-wrap items-center gap-3">
+                    <button id="openCategoryModalBtn" class="bg-slate-800 hover:bg-slate-700 text-slate-200 font-semibold px-4 py-3 rounded-xl transition text-sm border border-slate-700">
+                        + Nueva Categoría
+                    </button>
+                    <button id="openProductModalBtn" class="bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold px-5 py-3 rounded-xl transition text-sm shadow-lg shadow-emerald-500/20">
+                        + Nuevo Plato
+                    </button>
+                </div>
             </div>
 
             <!-- Tabla de Productos Vacía o con datos -->
@@ -96,6 +101,25 @@
         </div>
 
     </main>
+
+    <!-- MODAL PARA CREAR NUEVA CATEGORÍA -->
+    <div id="categoryModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-slate-950/80 backdrop-blur-sm p-4">
+        <div class="bg-slate-900 border border-slate-800 w-full max-w-md p-8 rounded-3xl relative shadow-2xl">
+            <button id="closeCategoryModalBtn" class="absolute top-6 right-6 text-slate-400 hover:text-white">✕</button>
+            <h3 class="text-2xl font-bold mb-2">Nueva Categoría</h3>
+            <p class="text-sm text-slate-400 mb-6">Organiza tu menú por secciones (Ej: Hamburguesas, Bebidas).</p>
+            
+            <form id="categoryForm" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">Nombre de la Categoría *</label>
+                    <input type="text" id="catName" required class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-sm text-slate-100 focus:outline-none focus:border-emerald-500 transition" placeholder="Ej. Entradas">
+                </div>
+                <button type="submit" class="w-full bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold py-3.5 rounded-xl transition shadow-lg shadow-emerald-500/20">
+                    Guardar Categoría
+                </button>
+            </form>
+        </div>
+    </div>
 
     <!-- MODAL PARA CREAR NUEVO PLATO -->
     <div id="productModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-slate-950/80 backdrop-blur-sm p-4">
