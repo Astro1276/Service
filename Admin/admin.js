@@ -221,7 +221,7 @@ async function createProduct(name, price) {
 // ==========================================
 document.getElementById('logoutBtn')?.addEventListener('click', async () => {
     await supabase.auth.signOut();
-    window.location.href = 'index.html';
+    window.location.href = '../index.html';
 });
 
 // Inicializar verificación al cargar la página del admin
