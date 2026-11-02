@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menú Digital - QRDely</title>
+    <!-- Tailwind CSS (CDN) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body class="bg-slate-950 text-slate-100 font-['Inter',sans-serif] antialiased selection:bg-emerald-500 selection:text-slate-950 pb-28">
+
+    <!-- HEADER DEL RESTAURANTE (Público) -->
+    <header class="bg-slate-900/90 backdrop-blur-md border-b border-slate-800 sticky top-0 z-40 text-center py-6 px-4">
+        <h1 id="pubRestaurantName" class="text-2xl font-extrabold tracking-tight text-white">Cargando menú...</h1>
+        <p class="text-xs text-emerald-400 font-medium mt-1">Escaneado desde la mesa • Carta digital en tiempo real</p>
+    </header>
+
+    <!-- CONTENEDOR DE LA CARTA (Categorías y Productos) -->
+    <main id="menuContainer" class="max-w-2xl mx-auto px-4 py-6 space-y-8">
+        <div class="text-center py-12 text-slate-500">
+            Cargando los platos disponibles...
+        </div>
+    </main>
+
+    <!-- BOTÓN FLOTANTE DE PEDIDO A WHATSAPP -->
+    <div id="whatsappBar" class="fixed bottom-0 left-0 right-0 z-50 bg-slate-900/95 backdrop-blur-md border-t border-slate-800 p-4 shadow-2xl hidden">
+        <div class="max-w-2xl mx-auto flex items-center justify-between gap-4">
+            <div>
+                <span class="text-xs text-slate-400 block">¿Listo para ordenar?</span>
+                <span class="text-sm font-bold text-slate-200">Envía tu pedido por WhatsApp</span>
+            </div>
+            <button id="sendWhatsappBtn" class="bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold px-6 py-3 rounded-xl transition text-sm shadow-lg shadow-emerald-500/20 flex items-center gap-2">
+                💬 Enviar Pedido
+            </button>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="py-8 text-center text-xs text-slate-600">
+        <p>Potenciado por <a href="index.html" class="text-emerald-500 hover:underline">QRDely</a> - Menús Digitales QR</p>
+    </footer>
+
+    <!-- SCRIPT DE LA VISTA PÚBLICA -->
+    <script type="module">
+        import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
+
+        const SUPABASE_URL = 'https://bmiweaeaznxxidlyaftu.supabase.co';
+        const SUPABASE_ANON_KEY = 'sb_publishable_n7R-U2YdVX7fSYVQN1E_Fw_m4atV42Q';
+        const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+        let restaurantData = null;
+        let cart = {}; // Almacenará los platos seleccionados { productId: quantity }
+
+        async function loadPublicMenu() {
+            // 1. Obtener el slug desde la URL (ej: menu.html?slug=burger-house-123)
+            const urlParams = new URLSearchParams(window.location.search);
+            const slug = urlParams.get('slug');
+
+            if (!slug) {
+                document.getElementById('menuContainer').innerHTML = `
+                    <div class="text-center py-20 text-red-400">
+                        <h2 class="text-xl font-bold mb-2">Restaurante no especificado</h2>
+                        <p class="text-sm text-slate-400">Verifica que el enlace del código QR sea correcto.</p>
+                    </div>`;
+                return;
+            }
+
+            try {
+                // 2. Buscar el restaurante por su slug
+                const { data: restaurant, error: restError } = await supabase
+                    .from('restaurants')
+                    .select('*')
+                    .eq('slug', slug)
+                    .single();
+
+                if (restError || !restaurant) throw new Error('Local no encontrado');
+                restaurantData = restaurant;
+
+                document.getElementById('pubRestaurantName').textContent = restaurant.name;
+                document.title = `${restaurant.name} - Menú Digital`;
+
+                // Si tiene WhatsApp configurado, mostrar la barra flotante
+                if (restaurant.whatsapp) {
+                    document.getElementById('whatsappBar').classList.remove('hidden');
+                }
+
+                // 3. Cargar Categorías
+                const { data: categories } = await supabase
+                    .from('categories')
+                    .select('*')
+                    .eq('restaurant_id', restaurant.id)
+                    .order('display_order', { ascending: true });
+
+                // 4. Cargar Productos DISPONIBLES (`is_available = true`)
+                const { data: products } = await supabase
+                    .from('products')
+                    .select('*')
+                    .eq('restaurant_id', restaurant.id)
+                    .eq('is_available', true);
+
+                renderMenu(categories || [], products || [], restaurant.plan);
+
+            } catch (error) {
+                console.error('Error al cargar menú:', error.message);
+                document.getElementById('menuContainer').innerHTML = `
+                    <div class="text-center py-20 text-red-400">
+                        <h2 class="text-xl font-bold mb-2">Ops, algo salió mal</h2>
+                        <p class="text-sm text-slate-400">El menú no está disponible en este momento.</p>
+                    </div>`;
+            }
+        }
+
+        function renderMenu(categories, products, plan) {
+            const container = document.getElementById('menuContainer');
+            container.innerHTML = '';
+
+            if (products.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center py-20 text-slate-500">
+                        <p>Este restaurante aún no tiene platos disponibles en su carta.</p>
+                    </div>`;
+                return;
+            }
+
+            // Agrupar productos por categoría o mostrar sin categoría
+            categories.forEach(cat => {
+                const catProducts = products.filter(p => p.category_id === cat.id);
+                if (catProducts.length === 0) return;
+
+                const section = document.createElement('div');
+                section.className = 'space-y-4';
+                section.innerHTML = `<h2 class="text-xl font-bold text-emerald-400 border-b border-slate-800 pb-2">${cat.name}</h2>`;
+
+                const grid = document.createElement('div');
+                grid.className = 'grid gap-4';
+
+                catProducts.forEach(product => {
+                    grid.appendChild(createProductCard(product, plan));
+                });
+
+                section.appendChild(grid);
+                container.appendChild(section);
+            });
+
+            // Productos sin categoría asignada
+            const uncategorizedProducts = products.filter(p => !p.category_id);
+            if (uncategorizedProducts.length > 0) {
+                const section = document.createElement('div');
+                section.className = 'space-y-4';
+                section.innerHTML = `<h2 class="text-xl font-bold text-slate-300 border-b border-slate-800 pb-2">Especialidades</h2>`;
+                
+                const grid = document.createElement('div');
+                grid.className = 'grid gap-4';
+
+                uncategorizedProducts.forEach(product => {
+                    grid.appendChild(createProductCard(product, plan));
+                });
+
+                section.appendChild(grid);
+                container.appendChild(section);
+            }
+        }
+
+        function createProductCard(product, plan) {
+            const card = document.createElement('div');
+            card.className = 'bg-slate-900 border border-slate-800 p-4 rounded-2xl flex items-center justify-between gap-4 shadow-md';
+
+            // Beneficio de Plan: Si es free, ocultamos o no mostramos imagen destacada para mantenerlo básico
+            const showImage = plan !== 'free' && product.image_url;
+
+            card.innerHTML = `
+                ${showImage ? `<div class="w-20 h-20 bg-slate-800 rounded-xl overflow-hidden shrink-0"><img src="${product.image_url}" class="w-full h-full object-cover"></div>` : ''}
+                <div class="flex-1">
+                    <h3 class="font-bold text-slate-100">${product.name}</h3>
+                    <p class="text-xs text-slate-400 line-clamp-2 mt-1">${product.description || ''}</p>
+                    <div class="text-emerald-400 font-mono font-bold mt-2">$${Number(product.price).toFixed(2)}</div>
+                </div>
+                <div class="flex items-center gap-2">
+                    <button class="bg-slate-800 hover:bg-slate-700 text-slate-200 w-8 h-8 rounded-xl font-bold transition decrease-btn" data-id="${product.id}">-</button>
+                    <span class="font-mono text-sm w-4 text-center qty-${product.id}">0</span>
+                    <button class="bg-emerald-500 hover:bg-emerald-400 text-slate-950 w-8 h-8 rounded-xl font-bold transition increase-btn" data-id="${product.id}">+</button>
+                </div>
+            `;
+
+            // Eventos del carrito
+            card.querySelector('.increase-btn').addEventListener('click', () => {
+                cart[product.id] = (cart[product.id] || 0) + 1;
+                updateCartUI(product.id, productsListCache => productsListCache);
+            });
+
+            card.querySelector('.decrease-btn').addEventListener('click', () => {
+                if (cart[product.id] > 0) {
+                    cart[product.id]--;
+                    if (cart[product.id] === 0) delete cart[product.id];
+                    updateCartUI(product.id);
+                }
+            });
+
+            return card;
+        }
+
+        // Variable global temporal para acceso a productos al hacer clic en WhatsApp
+        let allProductsCache = [];
+        async function cacheProducts(restaurantId) {
+            const { data } = await supabase.from('products').select('*').eq('restaurant_id', restaurantId);
+            allProductsCache = data || [];
+        }
+
+        function updateCartUI(productId) {
+            const qtySpan = document.querySelector(`.qty-${productId}`);
+            if (qtySpan) qtySpan.textContent = cart[productId] || 0;
+        }
+
+        // Enviar pedido a WhatsApp
+        document.getElementById('sendWhatsappBtn').addEventListener('click', async () => {
+            if (Object.keys(cart).length === 0) {
+                alert('Por favor selecciona al menos un plato para tu pedido.');
+                return;
+            }
+
+            // Asegurar caché de productos para armar el texto
+            if (allProductsCache.length === 0) {
+                const { data } = await supabase.from('products').select('*').eq('restaurant_id', restaurantData.id);
+                allProductsCache = data || [];
+            }
+
+            let message = `🍽️ *Nuevo Pedido - ${restaurantData.name}*\n\n`;
+            let total = 0;
+
+            for (const [prodId, qty] of Object.entries(cart)) {
+                const prod = allProductsCache.find(p => p.id === prodId);
+                if (prod) {
+                    const subtotal = prod.price * qty;
+                    total += subtotal;
+                    message += `• ${qty}x ${prod.name} ($${subtotal.toFixed(2)})\n`;
+                }
+            }
+
+            message += `\n*Total Estimado: $${total.toFixed(2)}*\n\n_Enviado a través de QRDely_`;
+
+            const whatsappUrl = `https://wa.me/${restaurantData.whatsapp}?text=${encodeURIComponent(message)}`;
+            window.open(whatsappUrl, '_blank');
+        });
+
+        // Cargar al iniciar
+        loadPublicMenu();
+    </script>
+</body>
+</html>
