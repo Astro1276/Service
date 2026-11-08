@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Universidad de Mipalo — Campus Virtual & Repositorio Oficial</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;900&family=Inter:wght@300;400;600&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
   <style>
     .font-serif-official { font-family: 'Cinzel', serif; }
@@ -70,67 +71,26 @@
     </a>
   </section>
 
-  <!-- FACULTADES E INFORMES (ENLAZAN AL VISOR.HTML) -->
+  <!-- FACULTADES & EXPEDIENTES CLÍNICOS (DINÁMICOS DESDE SUPABASE + BUSCADOR) -->
   <section id="facultades" class="max-w-6xl mx-auto px-4 py-12 border-t border-slate-900">
-    <div class="text-center mb-10">
+    <div class="text-center mb-8">
       <h3 class="font-serif-official text-2xl sm:text-3xl text-amber-400 font-bold mb-2">Facultades & Expedientes Clínicos</h3>
-      <p class="text-slate-400 text-xs sm:text-sm">Haga clic en cualquier informe para abrir el expediente independiente sincronizado con Supabase</p>
+      <p class="text-slate-400 text-xs sm:text-sm">Bandeja oficial sincronizada con el repositorio de Supabase</p>
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-      
-      <!-- INFORME 404-C -->
-      <a href="visor.html?id=404-C" class="group bg-slate-900 border border-slate-800 rounded-lg p-6 hover:border-amber-500 transition shadow-xl">
-        <span class="text-xs font-mono-code text-amber-400 uppercase tracking-widest block mb-2">Informe N° 404-C • Psicología Cringe</span>
-        <h4 class="font-serif-official text-xl font-bold mb-2 text-slate-100 group-hover:text-amber-300 transition">Síndrome de Proyección Romántica</h4>
-        <p class="text-slate-400 text-sm mb-4">
-          Validación clínica del síndrome de proyectarse al presenciar parejas en la vía pública o Reels de desamor a medianoche.
-        </p>
-        <div class="text-xs text-amber-500/80 font-mono-code flex items-center justify-between border-t border-slate-800 pt-3">
-          <span>Depto: Análisis de Escenarios Delusorios</span>
-          <span>Abrir Expediente →</span>
-        </div>
-      </a>
+    <!-- BUSCADOR DE INFORMES -->
+    <div class="max-w-xl mx-auto mb-10">
+      <div class="relative">
+        <input type="text" id="buscadorInformes" placeholder="🔍 Buscar por ID (ej. 408-F), título o departamento..." class="w-full bg-slate-900 border border-slate-800 rounded-lg px-4 py-3 pl-10 text-sm text-slate-200 focus:outline-none focus:border-amber-500 shadow-lg">
+      </div>
+    </div>
 
-      <!-- INFORME 406-D -->
-      <a href="visor.html?id=406-D" class="group bg-slate-900 border border-slate-800 rounded-lg p-6 hover:border-amber-500 transition shadow-xl">
-        <span class="text-xs font-mono-code text-amber-400 uppercase tracking-widest block mb-2">Informe N° 406-D • Realismo Afectivo</span>
-        <h4 class="font-serif-official text-xl font-bold mb-2 text-slate-100 group-hover:text-amber-300 transition">Teorema de Ocupación Afectiva</h4>
-        <p class="text-slate-400 text-sm mb-4">
-          Demostración empírica de cómo iniciar una relación sentimental anula de forma automática el carnet de sociópata en TikTok.
-        </p>
-        <div class="text-xs text-amber-500/80 font-mono-code flex items-center justify-between border-t border-slate-800 pt-3">
-          <span>Depto: Realismo Afectivo</span>
-          <span>Abrir Expediente →</span>
-        </div>
-      </a>
-
-      <!-- INFORME 407-E -->
-      <a href="visor.html?id=407-E" class="group bg-slate-900 border border-slate-800 rounded-lg p-6 hover:border-amber-500 transition shadow-xl">
-        <span class="text-xs font-mono-code text-amber-400 uppercase tracking-widest block mb-2">Informe N° 407-E • Geriatría Emocional</span>
-        <h4 class="font-serif-official text-xl font-bold mb-2 text-slate-100 group-hover:text-amber-300 transition">Longevidad e Hidratación del Alma</h4>
-        <p class="text-slate-400 text-sm mb-4">
-          Correlación directa entre cantar himnos de desamor (Belanova, Ana Gabriel) a pulmón herido y la extensión de 7 a 10 años de vida.
-        </p>
-        <div class="text-xs text-amber-500/80 font-mono-code flex items-center justify-between border-t border-slate-800 pt-3">
-          <span>Depto: Longevidad e Hidratación</span>
-          <span>Abrir Expediente →</span>
-        </div>
-      </a>
-
-      <!-- INFORME 408-F -->
-      <a href="visor.html?id=408-F" class="group bg-slate-900 border border-slate-800 rounded-lg p-6 hover:border-amber-500 transition shadow-xl">
-        <span class="text-xs font-mono-code text-amber-400 uppercase tracking-widest block mb-2">Informe N° 408-F • Catatonia Urbana</span>
-        <h4 class="font-serif-official text-xl font-bold mb-2 text-slate-100 group-hover:text-amber-300 transition">Protector de Pantalla Mental (45 Min)</h4>
-        <p class="text-slate-400 text-sm mb-4">
-          Estudio de inercia matutina/nocturna: 45 minutos sentado al borde de la cama mirando al vacío con una rolita triste de fondo.
-        </p>
-        <div class="text-xs text-amber-500/80 font-mono-code flex items-center justify-between border-t border-slate-800 pt-3">
-          <span>Depto: Inercia Matutina y Nocturna</span>
-          <span>Abrir Expediente →</span>
-        </div>
-      </a>
-
+    <!-- CONTENEDOR DE TARJETAS DINÁMICAS -->
+    <div id="gridInformes" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <!-- Los informes se cargan automáticamente aquí mediante JavaScript -->
+      <div class="col-span-2 text-center py-12 text-amber-400/80 font-mono-code text-xs animate-pulse">
+        Conectando con el archivo central de Machoa...
+      </div>
     </div>
   </section>
 
@@ -275,8 +235,78 @@
     © 2026 Universidad de Mipalo — Bajo la tutela del Gobierno Republicano de Machoa. Todos los derechos reservados.
   </footer>
 
-  <!-- SCRIPT DE INTERACTIVIDAD DEL CARNET -->
+  <!-- SCRIPTS DE CARGA DESDE SUPABASE Y BUSCADOR -->
   <script>
+    // Credenciales de Supabase (reemplazar con las del proyecto)
+    const SUPABASE_URL = 'https://bmiweaeaznxxidlyaftu.supabase.co';
+    const SUPABASE_ANON_KEY = 'sb_publishable_n7R-U2YdVX7fSYVQN1E_Fw_m4atV42Q';
+    const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+    let listaInformes = [];
+
+    async function cargarInformesDesdeSupabase() {
+      const grid = document.getElementById('gridInformes');
+      
+      const { data, error } = await supabaseClient
+        .from('informes_clinicos')
+        .select('id, titulo, departamento, codigo_decreto, resumen_ejecutivo');
+
+      if (error || !data || data.length === 0) {
+        grid.innerHTML = `<div class="col-span-2 text-center text-red-400 font-mono-code text-xs">No se encontraron expedientes en el archivo central de Machoa.</div>`;
+        return;
+      }
+
+      listaInformes = data;
+      renderizarInformes(listaInformes);
+    }
+
+    function renderizarInformes(informes) {
+      const grid = document.getElementById('gridInformes');
+      grid.innerHTML = '';
+
+      if (informes.length === 0) {
+        grid.innerHTML = `<div class="col-span-2 text-center text-slate-500 font-mono-code text-xs py-8">Ningún expediente coincide con los criterios de búsqueda.</div>`;
+        return;
+      }
+
+      informes.forEach(inf => {
+        const tarjeta = document.createElement('a');
+        tarjeta.href = `visor.html?id=${inf.id}`;
+        tarjeta.className = 'group bg-slate-900 border border-slate-800 rounded-lg p-6 hover:border-amber-500 transition shadow-xl flex flex-col justify-between';
+        
+        tarjeta.innerHTML = `
+          <div>
+            <span class="text-xs font-mono-code text-amber-400 uppercase tracking-widest block mb-2">Expediente N° ${inf.id} • ${inf.codigo_decreto || ''}</span>
+            <h4 class="font-serif-official text-xl font-bold mb-2 text-slate-100 group-hover:text-amber-300 transition">${inf.titulo}</h4>
+            <p class="text-slate-400 text-sm mb-4 line-clamp-2">
+              ${inf.resumen_ejecutivo || 'Sin resumen disponible.'}
+            </p>
+          </div>
+          <div class="text-xs text-amber-500/80 font-mono-code flex items-center justify-between border-t border-slate-800 pt-3 mt-2">
+            <span>Depto: ${inf.departamento || 'General'}</span>
+            <span class="group-hover:translate-x-1 transition-transform">Abrir Expediente →</span>
+          </div>
+        `;
+        grid.appendChild(tarjeta);
+      });
+    }
+
+    // Buscador en tiempo real
+    document.getElementById('buscadorInformes').addEventListener('input', (e) => {
+      const query = e.target.value.toLowerCase().trim();
+      const filtrados = listaInformes.filter(inf => 
+        inf.id.toLowerCase().includes(query) ||
+        inf.titulo.toLowerCase().includes(query) ||
+        (inf.departamento && inf.departamento.toLowerCase().includes(query)) ||
+        (inf.codigo_decreto && inf.codigo_decreto.toLowerCase().includes(query))
+      );
+      renderizarInformes(filtrados);
+    });
+
+    // Ejecutar al cargar la página
+    cargarInformesDesdeSupabase();
+
+    // --- LÓGICA DEL CARNETIZADOR ---
     const inputNombre = document.getElementById('inputNombre');
     const inputFacultad = document.getElementById('inputFacultad');
     const inputNivel = document.getElementById('inputNivel');
@@ -286,14 +316,12 @@
     const cardFacultad = document.getElementById('cardFacultad');
     const cardNivel = document.getElementById('cardNivel');
 
-    // Actualizar nivel de overthinking en tiempo real
     inputNivel.addEventListener('input', (e) => {
       const val = e.target.value;
       labelNivel.innerText = `${val}% (Crítico)`;
       cardNivel.innerText = `${val}%`;
     });
 
-    // Función de generación en tiempo real
     function generarCarnet() {
       const nombreVal = inputNombre.value.trim() || 'Astro1276';
       const facultadVal = inputFacultad.value;
@@ -303,7 +331,6 @@
       cardFacultad.innerText = `Facultad de ${facultadVal}`;
       cardNivel.innerText = `${nivelVal}%`;
 
-      // Efecto visual de emisión
       const card = document.getElementById('carnetCard');
       card.classList.add('scale-105', 'border-amber-400');
       setTimeout(() => {
@@ -311,7 +338,6 @@
       }, 300);
     }
 
-    // Escuchar cambios en los inputs para vista previa instantánea
     inputNombre.addEventListener('input', () => {
       cardNombre.innerText = inputNombre.value.trim() || 'Astro1276';
     });
@@ -322,4 +348,5 @@
   </script>
 
 </body>
-</html>
+      </html>
+                                                                                                          
