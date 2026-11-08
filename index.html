@@ -376,3 +376,19 @@
 
       const card = document.getElementById('carnetCard');
       card.classList.add('scale-105', 'border-amber-400')
+       setTimeout(() => {
+        card.classList.remove('scale-105', 'border-amber-400');
+      }, 300);
+    }
+
+    inputNombre.addEventListener('input', () => {
+      cardNombre.innerText = inputNombre.value.trim() || 'Astro1276';
+    });
+
+    inputFacultad.addEventListener('change', () => {
+      cardFacultad.innerText = `Facultad de ${inputFacultad.value}`;
+    });
+  </script>
+
+</body>
+</html>
