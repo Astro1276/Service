@@ -1,42 +1,47 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" class="dark">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Universidad de Mipalo — Repositorio Oficial & Campus Virtual</title>
+  <title>Universidad de Mipalo — Campus Virtual & Repositorio Oficial</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;900&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;900&family=Inter:wght@300;400;600&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
   <style>
     .font-serif-official { font-family: 'Cinzel', serif; }
     .font-sans-body { font-family: 'Inter', sans-serif; }
+    .font-mono-code { font-family: 'JetBrains Mono', monospace; }
     .bronze-card {
       background: linear-gradient(135deg, #2a2421 0%, #1a1614 100%);
       border: 1px solid #b8860b;
     }
+    .carnet-bg {
+      background: linear-gradient(135deg, #090d16 0%, #111827 50%, #1e1b4b 100%);
+      border: 2px solid rgba(217, 119, 6, 0.4);
+    }
   </style>
 </head>
-<body class="bg-slate-950 text-slate-100 font-sans-body min-h-screen flex flex-col justify-between">
+<body class="bg-slate-950 text-slate-100 font-sans-body min-h-screen flex flex-col justify-between selection:bg-amber-500 selection:text-slate-950">
 
   <!-- TOP HEADER GUBERNAMENTAL -->
-  <div class="bg-amber-600/10 border-b border-amber-500/20 text-amber-400 text-xs text-center py-1 tracking-widest uppercase">
-    Bajo la tutela del Gobierno Republicano de Machoa — República Académica Privada
+  <div class="bg-amber-600/10 border-b border-amber-500/20 text-amber-400 text-xs text-center py-1.5 tracking-widest uppercase font-mono-code">
+    🏛️ Gobierno Republicano de Machoa — Campus Privado de Élite
   </div>
 
   <!-- NAVBAR -->
-  <header class="border-b border-slate-800 bg-slate-900/80 backdrop-blur sticky top-0 z-50">
+  <header class="border-b border-slate-800/80 bg-slate-900/90 backdrop-blur sticky top-0 z-50">
     <div class="max-w-6xl mx-auto px-4 py-4 flex flex-wrap justify-between items-center">
       <div class="flex items-center space-x-3">
-        <div class="w-10 h-10 rounded-full border border-amber-500 flex items-center flex-shrink-0 justify-center bg-slate-950 font-serif-official text-amber-400 font-bold">
+        <div class="w-10 h-10 rounded-full border border-amber-500 flex items-center justify-center bg-slate-950 font-serif-official text-amber-400 font-bold shadow-lg shadow-amber-500/10">
           UM
         </div>
         <div>
-          <h1 class="font-serif-official text-lg text-slate-100 font-bold leading-tight">Universidad de Mipalo</h1>
-          <p class="text-xs text-slate-400">Campus Virtual & Repositorio Oficial</p>
+          <h1 class="font-serif-official text-base sm:text-lg text-slate-100 font-bold leading-tight">Universidad de Mipalo</h1>
+          <p class="text-xs text-slate-400 font-mono-code">Repositorio Oficial & Campus 1.0</p>
         </div>
       </div>
-      <nav class="flex space-x-6 text-sm text-slate-300 mt-4 sm:mt-0">
+      <nav class="flex space-x-4 sm:space-x-6 text-xs sm:text-sm text-slate-300 mt-3 sm:mt-0">
         <a href="#facultades" class="hover:text-amber-400 transition">Facultades</a>
-        <a href="#informes" class="hover:text-amber-400 transition">Informes</a>
+        <a href="#carnet" class="hover:text-amber-400 transition">Carnetizador</a>
         <a href="#honor" class="hover:text-amber-400 transition">Cuadro de Honor</a>
         <a href="#secretaria" class="hover:text-amber-400 transition">Secretaría Legal</a>
       </nav>
@@ -45,79 +50,169 @@
 
   <!-- HERO SECTION -->
   <section class="max-w-4xl mx-auto px-4 py-16 text-center">
-    <div class="inline-block border border-amber-500/40 rounded-full px-4 py-1 text-xs text-amber-400 tracking-wider uppercase mb-6 bg-amber-500/5">
+    <div class="inline-block border border-amber-500/40 rounded-full px-4 py-1 text-xs text-amber-400 tracking-wider uppercase mb-6 bg-amber-500/5 font-mono-code">
       Proyección • Despecho • Catatonia
     </div>
-    <h2 class="font-serif-official text-4xl sm:text-5xl font-bold text-slate-100 mb-6 leading-tight">
+    <h2 class="font-serif-official text-3xl sm:text-5xl font-bold text-slate-100 mb-6 leading-tight">
       Validación Médica para las Crisis Nocturnas
     </h2>
     <p class="text-slate-400 text-base sm:text-lg mb-8 leading-relaxed max-w-2xl mx-auto">
-      Institución académica de élite dedicada al estudio riguroso, científico y cínico del overthinking, la soltería imaginaria y la inercia existencial centenial.
+      Institución académica dedicada al estudio riguroso, científico y cínico del overthinking, la soltería imaginaria y la inercia existencial centenial.
     </p>
 
     <!-- BANNER ADMISIÓN -->
-    <div class="p-4 rounded-lg bg-red-950/30 border border-red-500/30 text-red-300 text-sm max-w-xl mx-auto mb-8">
+    <div class="p-4 rounded-lg bg-red-950/30 border border-red-500/30 text-red-300 text-xs sm:text-sm max-w-xl mx-auto mb-8 shadow-inner">
       <strong>⚠️ Advertencia de Admisión:</strong> Solo se acepta a la crema y nata de los sobrepensadores. El cardio del alma es asignatura obligatoria.
     </div>
 
-    <a href="#informes" class="inline-block bg-amber-600 hover:bg-amber-500 text-slate-950 font-semibold px-6 py-3 rounded-md transition font-serif-official text-sm tracking-wide">
-      Consultar Último Informe Clínico
+    <a href="#facultades" class="inline-block bg-amber-600 hover:bg-amber-500 text-slate-950 font-semibold px-6 py-3 rounded-md transition font-serif-official text-sm tracking-wide shadow-lg shadow-amber-600/20">
+      Consultar Informes en Supabase
     </a>
   </section>
 
-  <!-- FACULTADES E INFORMES -->
+  <!-- FACULTADES E INFORMES (ENLAZAN AL VISOR.HTML) -->
   <section id="facultades" class="max-w-6xl mx-auto px-4 py-12 border-t border-slate-900">
-    <h3 class="font-serif-official text-2xl text-amber-400 font-bold mb-8 text-center">
-      Facultades & Expedientes Clínicos
-    </h3>
+    <div class="text-center mb-10">
+      <h3 class="font-serif-official text-2xl sm:text-3xl text-amber-400 font-bold mb-2">Facultades & Expedientes Clínicos</h3>
+      <p class="text-slate-400 text-xs sm:text-sm">Haga clic en cualquier informe para abrir el expediente independiente sincronizado con Supabase</p>
+    </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6" id="informes">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
       
       <!-- INFORME 404-C -->
-      <div class="bg-slate-900 border border-slate-800 rounded-lg p-6 hover:border-amber-500/50 transition">
-        <span class="text-xs font-mono text-amber-400 uppercase tracking-widest block mb-2">Informe N° 404-C</span>
-        <h4 class="font-serif-official text-xl font-bold mb-2 text-slate-100">Síndrome de Proyección Romántica</h4>
+      <a href="visor.html?id=404-C" class="group bg-slate-900 border border-slate-800 rounded-lg p-6 hover:border-amber-500 transition shadow-xl">
+        <span class="text-xs font-mono-code text-amber-400 uppercase tracking-widest block mb-2">Informe N° 404-C • Psicología Cringe</span>
+        <h4 class="font-serif-official text-xl font-bold mb-2 text-slate-100 group-hover:text-amber-300 transition">Síndrome de Proyección Romántica</h4>
         <p class="text-slate-400 text-sm mb-4">
-          Validación clínica del síndrome de proyectarse al presenciar parejas en la vía pública o Reels de desamor a altas horas de la noche.
+          Validación clínica del síndrome de proyectarse al presenciar parejas en la vía pública o Reels de desamor a medianoche.
         </p>
-        <div class="text-xs text-slate-500 border-t border-slate-800 pt-3">
-          Depto: Análisis de Escenarios Delusorios
+        <div class="text-xs text-amber-500/80 font-mono-code flex items-center justify-between border-t border-slate-800 pt-3">
+          <span>Depto: Análisis de Escenarios Delusorios</span>
+          <span>Abrir Expediente →</span>
         </div>
-      </div>
+      </a>
 
       <!-- INFORME 406-D -->
-      <div class="bg-slate-900 border border-slate-800 rounded-lg p-6 hover:border-amber-500/50 transition">
-        <span class="text-xs font-mono text-amber-400 uppercase tracking-widest block mb-2">Informe N° 406-D</span>
-        <h4 class="font-serif-official text-xl font-bold mb-2 text-slate-100">Teorema de Ocupación Afectiva</h4>
+      <a href="visor.html?id=406-D" class="group bg-slate-900 border border-slate-800 rounded-lg p-6 hover:border-amber-500 transition shadow-xl">
+        <span class="text-xs font-mono-code text-amber-400 uppercase tracking-widest block mb-2">Informe N° 406-D • Realismo Afectivo</span>
+        <h4 class="font-serif-official text-xl font-bold mb-2 text-slate-100 group-hover:text-amber-300 transition">Teorema de Ocupación Afectiva</h4>
         <p class="text-slate-400 text-sm mb-4">
-          Demostración empírica de cómo tener pareja anula automáticamente el carnet de sociópata romántico en TikTok.
+          Demostración empírica de cómo iniciar una relación sentimental anula de forma automática el carnet de sociópata en TikTok.
         </p>
-        <div class="text-xs text-slate-500 border-t border-slate-800 pt-3">
-          Depto: Realismo Afectivo
+        <div class="text-xs text-amber-500/80 font-mono-code flex items-center justify-between border-t border-slate-800 pt-3">
+          <span>Depto: Realismo Afectivo</span>
+          <span>Abrir Expediente →</span>
         </div>
-      </div>
+      </a>
 
       <!-- INFORME 407-E -->
-      <div class="bg-slate-900 border border-slate-800 rounded-lg p-6 hover:border-amber-500/50 transition">
-        <span class="text-xs font-mono text-amber-400 uppercase tracking-widest block mb-2">Informe N° 407-E</span>
-        <h4 class="font-serif-official text-xl font-bold mb-2 text-slate-100">Longevidad e Hidratación del Alma</h4>
+      <a href="visor.html?id=407-E" class="group bg-slate-900 border border-slate-800 rounded-lg p-6 hover:border-amber-500 transition shadow-xl">
+        <span class="text-xs font-mono-code text-amber-400 uppercase tracking-widest block mb-2">Informe N° 407-E • Geriatría Emocional</span>
+        <h4 class="font-serif-official text-xl font-bold mb-2 text-slate-100 group-hover:text-amber-300 transition">Longevidad e Hidratación del Alma</h4>
         <p class="text-slate-400 text-sm mb-4">
-          Correlación directa entre cantar a pulmón herido himnos de Belanova o Ana Gabriel y la extensión de 7 a 10 años de esperanza de vida.
+          Correlación directa entre cantar himnos de desamor (Belanova, Ana Gabriel) a pulmón herido y la extensión de 7 a 10 años de vida.
         </p>
-        <div class="text-xs text-slate-500 border-t border-slate-800 pt-3">
-          Facultad: Geriatría Emocional y Dramaturgia Musical
+        <div class="text-xs text-amber-500/80 font-mono-code flex items-center justify-between border-t border-slate-800 pt-3">
+          <span>Depto: Longevidad e Hidratación</span>
+          <span>Abrir Expediente →</span>
         </div>
-      </div>
+      </a>
 
       <!-- INFORME 408-F -->
-      <div class="bg-slate-900 border border-slate-800 rounded-lg p-6 hover:border-amber-500/50 transition">
-        <span class="text-xs font-mono text-amber-400 uppercase tracking-widest block mb-2">Informe N° 408-F</span>
-        <h4 class="font-serif-official text-xl font-bold mb-2 text-slate-100">Protector de Pantalla Mental (45 Min)</h4>
+      <a href="visor.html?id=408-F" class="group bg-slate-900 border border-slate-800 rounded-lg p-6 hover:border-amber-500 transition shadow-xl">
+        <span class="text-xs font-mono-code text-amber-400 uppercase tracking-widest block mb-2">Informe N° 408-F • Catatonia Urbana</span>
+        <h4 class="font-serif-official text-xl font-bold mb-2 text-slate-100 group-hover:text-amber-300 transition">Protector de Pantalla Mental (45 Min)</h4>
         <p class="text-slate-400 text-sm mb-4">
-          Análisis del estado catatónico: 45 minutos sentado en la orilla de la cama con una rolita triste de fondo antes de iniciar la jornada.
+          Estudio de inercia matutina/nocturna: 45 minutos sentado al borde de la cama mirando al vacío con una rolita triste de fondo.
         </p>
-        <div class="text-xs text-slate-500 border-t border-slate-800 pt-3">
-          Depto: Inercia Matutina y Nocturna
+        <div class="text-xs text-amber-500/80 font-mono-code flex items-center justify-between border-t border-slate-800 pt-3">
+          <span>Depto: Inercia Matutina y Nocturna</span>
+          <span>Abrir Expediente →</span>
+        </div>
+      </a>
+
+    </div>
+  </section>
+
+  <!-- MÓDULO INTERACTIVO: GENERADOR DE CARNET ESTUDIANTIL UMIP -->
+  <section id="carnet" class="max-w-4xl mx-auto px-4 py-12 border-t border-slate-900">
+    <div class="text-center mb-8">
+      <h3 class="font-serif-official text-2xl sm:text-3xl text-amber-400 font-bold mb-2">Carnetizador Oficial de Becados</h3>
+      <p class="text-slate-400 text-xs sm:text-sm">Genera tu credencial oficial de la Universidad de Mipalo en tiempo real</p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center bg-slate-900/50 border border-slate-800 rounded-xl p-6 sm:p-8">
+      
+      <!-- Formulario de Entrada -->
+      <div class="space-y-4">
+        <div>
+          <label class="block text-xs text-slate-400 uppercase font-mono-code mb-1">Nombre Completo o Alias</label>
+          <input type="text" id="inputNombre" placeholder="Ej. Astro1276" class="w-full bg-slate-950 border border-slate-800 rounded px-4 py-2.5 text-sm text-slate-200 focus:outline-none focus:border-amber-500">
+        </div>
+
+        <div>
+          <label class="block text-xs text-slate-400 uppercase font-mono-code mb-1">Facultad de Adscripción</label>
+          <select id="inputFacultad" class="w-full bg-slate-950 border border-slate-800 rounded px-4 py-2.5 text-sm text-slate-200 focus:outline-none focus:border-amber-500">
+            <option value="Psicología Cringe y TikTok">Facultad de Psicología Cringe y TikTok</option>
+            <option value="Geriatría Emocional y Dramaturgia">Facultad de Geriatría Emocional y Dramaturgia</option>
+            <option value="Catatonia Urbana y Vacío Existencial">Facultad de Catatonia Urbana y Vacío Existencial</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="block text-xs text-slate-400 uppercase font-mono-code mb-1">Nivel de Overthinking (%)</label>
+          <input type="range" id="inputNivel" min="50" max="100" value="98" class="w-full accent-amber-500 cursor-pointer">
+          <div class="flex justify-between text-xs text-slate-500 font-mono-code mt-1">
+            <span>50% (Leve)</span>
+            <span id="labelNivel" class="text-amber-400 font-bold">98% (Crítico)</span>
+          </div>
+        </div>
+
+        <button onclick="generarCarnet()" class="w-full bg-amber-600 hover:bg-amber-500 text-slate-950 font-semibold py-2.5 rounded text-sm transition font-serif-official tracking-wide shadow-md">
+          Emitir Credencial de Machoa
+        </button>
+      </div>
+
+      <!-- Vista Previa del Carnet Digital -->
+      <div class="flex justify-center">
+        <div id="carnetCard" class="carnet-bg rounded-xl p-6 w-full max-w-xs shadow-2xl relative overflow-hidden transition-all duration-300">
+          <div class="absolute -right-10 -bottom-10 w-32 h-32 bg-amber-500/10 rounded-full blur-2xl pointer-events-none"></div>
+          
+          <div class="flex justify-between items-start border-b border-amber-500/20 pb-3 mb-4">
+            <div>
+              <span class="text-[9px] font-mono-code text-amber-500 uppercase tracking-widest block">Gobierno de Machoa</span>
+              <h4 class="font-serif-official text-xs font-bold text-slate-100">Univ. de Mipalo</h4>
+            </div>
+            <div class="w-7 h-7 rounded-full bg-amber-500/20 border border-amber-500 flex items-center justify-center font-serif-official text-xs text-amber-400 font-bold">
+              UM
+            </div>
+          </div>
+
+          <div class="space-y-3 mb-6">
+            <div>
+              <span class="text-[10px] text-slate-500 block uppercase font-mono-code">Titular / Becado</span>
+              <p id="cardNombre" class="font-serif-official text-base font-bold text-amber-300 truncate">Astro1276</p>
+            </div>
+            <div>
+              <span class="text-[10px] text-slate-500 block uppercase font-mono-code">Facultad Asignada</span>
+              <p id="cardFacultad" class="text-xs text-slate-300 leading-tight">Facultad de Catatonia Urbana y Vacío Existencial</p>
+            </div>
+            <div class="flex justify-between text-xs pt-2 border-t border-slate-800">
+              <div>
+                <span class="text-[9px] text-slate-500 block font-mono-code">Estatus</span>
+                <span class="text-emerald-400 font-bold font-mono-code">BECADO CRÍTICO</span>
+              </div>
+              <div>
+                <span class="text-[9px] text-slate-500 block font-mono-code">Índice Overthinking</span>
+                <span id="cardNivel" class="text-amber-400 font-bold font-mono-code">98%</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="bg-slate-950/80 rounded p-2 flex items-center justify-between border border-slate-800">
+            <span class="text-[9px] font-mono-code text-slate-400 truncate">ID: UMIP-2026-MACHOA</span>
+            <div class="w-6 h-6 bg-amber-500/20 rounded flex items-center justify-center text-[10px] text-amber-400 font-mono-code">QR</div>
+          </div>
         </div>
       </div>
 
@@ -128,13 +223,13 @@
   <section id="honor" class="max-w-6xl mx-auto px-4 py-12 border-t border-slate-900">
     <div class="text-center mb-10">
       <h3 class="font-serif-official text-3xl text-amber-400 font-bold mb-2">Cuadro de Honor</h3>
-      <p class="text-slate-400 text-sm">Placa conmemorativa de leyendas intocables del overthinking</p>
+      <p class="text-slate-400 text-xs sm:text-sm">Placa conmemorativa de bronce para leyendas intocables del overthinking</p>
     </div>
 
     <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
       
-      <div class="bronze-card rounded-lg p-6 text-center relative overflow-hidden">
-        <div class="text-amber-500 font-serif-official text-xs uppercase tracking-widest mb-2">Expediente Ilustre N° 001</div>
+      <div class="bronze-card rounded-lg p-6 text-center relative overflow-hidden shadow-xl">
+        <div class="text-amber-500 font-serif-official text-xs uppercase tracking-widest mb-2 font-mono-code">Expediente Ilustre N° 001</div>
         <h4 class="font-serif-official text-2xl font-bold text-amber-200 mb-1">Nicolás Estelar</h4>
         <p class="text-amber-400/80 text-xs italic mb-4">Doctorado Honoris Causa en Miradas al Vacío</p>
         <p class="text-slate-300 text-sm leading-relaxed">
@@ -142,8 +237,8 @@
         </p>
       </div>
 
-      <div class="bronze-card rounded-lg p-6 text-center relative overflow-hidden">
-        <div class="text-amber-500 font-serif-official text-xs uppercase tracking-widest mb-2">Expediente Ilustre N° 002</div>
+      <div class="bronze-card rounded-lg p-6 text-center relative overflow-hidden shadow-xl">
+        <div class="text-amber-500 font-serif-official text-xs uppercase tracking-widest mb-2 font-mono-code">Expediente Ilustre N° 002</div>
         <h4 class="font-serif-official text-2xl font-bold text-amber-200 mb-1">Alberto Instantáneo</h4>
         <p class="text-amber-400/80 text-xs italic mb-4">Especialista en Respuestas Automáticas de Medianoche</p>
         <p class="text-slate-300 text-sm leading-relaxed">
@@ -156,19 +251,19 @@
 
   <!-- SECRETARÍA LEGAL DE MACHOA -->
   <section id="secretaria" class="max-w-4xl mx-auto px-4 py-12 border-t border-slate-900">
-    <div class="bg-slate-900/60 border border-slate-800 rounded-lg p-8">
+    <div class="bg-slate-900/60 border border-slate-800 rounded-xl p-6 sm:p-8 shadow-xl">
       <h3 class="font-serif-official text-2xl text-amber-400 font-bold mb-4">Secretaría Legal & Decretos</h3>
-      <p class="text-slate-400 text-sm mb-6">
-        Bajo normativa explícita del <strong>Gobierno Republicano de Machoa</strong>, queda estrictamente prohibido el uso de canciones tristes a las 2:00 a.m. si el ciudadano dispone de pareja estable.
+      <p class="text-slate-400 text-sm mb-6 leading-relaxed">
+        Bajo normativa explícita del <strong>Gobierno Republicano de Machoa</strong>, queda estrictamente prohibido reproducir canciones tristes a las 2:00 a.m. si el ciudadano dispone de pareja estable. El incumplimiento amerita el decomiso del carnet de sociópata.
       </p>
       
-      <form class="space-y-4" onsubmit="event.preventDefault(); alert('Solicitud de beca enviada a evaluación del Decanato.');">
-        <h4 class="text-slate-200 font-semibold text-sm">Solicitud de Beca de Sobrepensador</h4>
+      <form class="space-y-4" onsubmit="event.preventDefault(); alert('Solicitud de beca enviada a evaluación del Decanato de Machoa.');">
+        <h4 class="text-slate-200 font-semibold text-xs uppercase font-mono-code tracking-wider">Postulación Expres al Decanato</h4>
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <input type="text" placeholder="Nombre completo / Alias" class="bg-slate-950 border border-slate-800 rounded px-4 py-2 text-sm text-slate-200 focus:outline-none focus:border-amber-500" required>
-          <input type="text" placeholder="Nivel de Overthinking (1-100)" class="bg-slate-950 border border-slate-800 rounded px-4 py-2 text-sm text-slate-200 focus:outline-none focus:border-amber-500" required>
+          <input type="text" placeholder="Alias en redes / Usuario" class="bg-slate-950 border border-slate-800 rounded px-4 py-2.5 text-sm text-slate-200 focus:outline-none focus:border-amber-500" required>
+          <input type="email" placeholder="Correo electrónico institucional" class="bg-slate-950 border border-slate-800 rounded px-4 py-2.5 text-sm text-slate-200 focus:outline-none focus:border-amber-500" required>
         </div>
-        <button type="submit" class="w-full bg-slate-800 hover:bg-slate-700 text-amber-400 border border-amber-500/30 py-2.5 rounded text-sm font-semibold transition">
+        <button type="submit" class="w-full bg-slate-800 hover:bg-slate-700 text-amber-400 border border-amber-500/30 py-2.5 rounded text-sm font-semibold transition font-serif-official tracking-wide">
           Enviar Postulación al Decanato
         </button>
       </form>
@@ -176,9 +271,55 @@
   </section>
 
   <!-- FOOTER GUBERNAMENTAL -->
-  <footer class="border-t border-slate-900 py-6 text-center text-xs text-slate-600">
+  <footer class="border-t border-slate-900 py-6 text-center text-xs text-slate-500 font-mono-code">
     © 2026 Universidad de Mipalo — Bajo la tutela del Gobierno Republicano de Machoa. Todos los derechos reservados.
   </footer>
+
+  <!-- SCRIPT DE INTERACTIVIDAD DEL CARNET -->
+  <script>
+    const inputNombre = document.getElementById('inputNombre');
+    const inputFacultad = document.getElementById('inputFacultad');
+    const inputNivel = document.getElementById('inputNivel');
+    const labelNivel = document.getElementById('labelNivel');
+    
+    const cardNombre = document.getElementById('cardNombre');
+    const cardFacultad = document.getElementById('cardFacultad');
+    const cardNivel = document.getElementById('cardNivel');
+
+    // Actualizar nivel de overthinking en tiempo real
+    inputNivel.addEventListener('input', (e) => {
+      const val = e.target.value;
+      labelNivel.innerText = `${val}% (Crítico)`;
+      cardNivel.innerText = `${val}%`;
+    });
+
+    // Función de generación en tiempo real
+    function generarCarnet() {
+      const nombreVal = inputNombre.value.trim() || 'Astro1276';
+      const facultadVal = inputFacultad.value;
+      const nivelVal = inputNivel.value;
+
+      cardNombre.innerText = nombreVal;
+      cardFacultad.innerText = `Facultad de ${facultadVal}`;
+      cardNivel.innerText = `${nivelVal}%`;
+
+      // Efecto visual de emisión
+      const card = document.getElementById('carnetCard');
+      card.classList.add('scale-105', 'border-amber-400');
+      setTimeout(() => {
+        card.classList.remove('scale-105', 'border-amber-400');
+      }, 300);
+    }
+
+    // Escuchar cambios en los inputs para vista previa instantánea
+    inputNombre.addEventListener('input', () => {
+      cardNombre.innerText = inputNombre.value.trim() || 'Astro1276';
+    });
+
+    inputFacultad.addEventListener('change', () => {
+      cardFacultad.innerText = `Facultad de ${inputFacultad.value}`;
+    });
+  </script>
 
 </body>
 </html>
