@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="es" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Visor de Expediente Clínico — Universidad de Mipalo</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;900&family=Inter:wght@300;400;600&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    .font-serif-official { font-family: 'Cinzel', serif; }
+    .font-sans-body { font-family: 'Inter', sans-serif; }
+    .font-mono-code { font-family: 'JetBrains Mono', monospace; }
+  </style>
+</head>
+<body class="bg-slate-950 text-slate-100 font-sans-body min-h-screen p-4 sm:p-8 flex justify-center items-center selection:bg-amber-500 selection:text-slate-950">
+
+  <!-- PANTALLA DE CARGA / ESTADO DE CONSULTA -->
+  <div id="loader" class="text-center space-y-4">
+    <div class="w-12 h-12 border-2 border-amber-500 border-t-transparent rounded-full animate-spin mx-auto"></div>
+    <div class="text-amber-400 font-serif-official text-sm tracking-widest uppercase animate-pulse">
+      Consultando Archivos Centrales de la Secretaría de Machoa...
+    </div>
+  </div>
+
+  <!-- EXPEDIENTE CLÍNICO INTEGRAL -->
+  <article id="expediente" class="hidden max-w-4xl w-full bg-slate-900 border border-amber-500/40 rounded-xl p-6 sm:p-12 shadow-2xl relative my-6">
+    
+    <!-- ENCABEZADO INSTITUCIONAL DE MACHOA -->
+    <header class="border-b-2 border-amber-500/30 pb-6 mb-8 text-center relative">
+      <div class="text-[10px] text-amber-500 font-mono-code uppercase tracking-widest mb-2 bg-amber-500/10 py-1 px-3 rounded-full inline-block">
+        Gobierno Republicano de Machoa — Campus Virtual & Repositorio Oficial
+      </div>
+      <h1 class="font-serif-official text-2xl sm:text-4xl font-bold text-slate-100 tracking-wide mt-2" id="inf-universidad">UNIVERSIDAD DE MIPALO</h1>
+      <p class="text-xs sm:text-sm text-slate-400 font-serif-official mt-1" id="inf-facultad"></p>
+      <p class="text-xs text-amber-400/90 font-mono-code mt-0.5" id="inf-departamento"></p>
+      
+      <div class="mt-4 pt-3 border-t border-slate-800 flex flex-wrap justify-center items-center gap-4 text-xs font-mono-code text-slate-400">
+        <span class="text-amber-300 font-bold" id="inf-codigo"></span>
+        <span>•</span>
+        <span>Fecha: <strong class="text-slate-200" id="inf-fecha"></strong></span>
+      </div>
+    </header>
+
+    <!-- FICHA TÉCNICA DEL INFORME -->
+    <div class="bg-slate-950/80 rounded-lg p-5 border border-slate-800 mb-8 space-y-3">
+      <div>
+        <span class="text-[10px] font-mono-code text-slate-500 uppercase tracking-wider block">Asunto / Síndrome Evaluado:</span>
+        <h2 class="text-base sm:text-lg font-serif-official text-amber-200 font-semibold mt-0.5 leading-snug" id="inf-titulo"></h2>
+      </div>
+      <div class="border-t border-slate-800/80 pt-2" id="box-investigadores">
+        <span class="text-[10px] font-mono-code text-slate-500 uppercase tracking-wider block">Investigadores Principales:</span>
+        <p class="text-xs text-slate-300 font-mono-code mt-0.5" id="inf-investigadores"></p>
+      </div>
+    </div>
+
+    <!-- SECCIONES DEL EXPEDIENTE TÉCNICO-CIENTÍFICO -->
+    <div class="space-y-8 text-sm leading-relaxed text-slate-300">
+      
+      <!-- 1. RESUMEN EJECUTIVO -->
+      <section id="sec-resumen">
+        <h3 class="font-serif-official text-amber-400 font-bold text-base mb-2 flex items-center gap-2">
+          <span class="text-xs font-mono-code text-amber-500">1.</span> Resumen Ejecutivo
+        </h3>
+        <p class="bg-slate-950/40 p-4 rounded-lg border border-slate-800 text-slate-300 whitespace-pre-line" id="inf-resumen"></p>
+      </section>
+
+      <!-- 2. MARCO TEÓRICO -->
+      <section id="sec-marco">
+        <h3 class="font-serif-official text-amber-400 font-bold text-base mb-2 flex items-center gap-2">
+          <span class="text-xs font-mono-code text-amber-500">2.</span> Marco Teórico y Conceptual
+        </h3>
+        <p class="bg-slate-950/40 p-4 rounded-lg border border-slate-800 text-slate-300 whitespace-pre-line" id="inf-marco"></p>
+      </section>
+
+      <!-- 3. METODOLOGÍA -->
+      <section id="sec-metodologia">
+        <h3 class="font-serif-official text-amber-400 font-bold text-base mb-2 flex items-center gap-2">
+          <span class="text-xs font-mono-code text-amber-500">3.</span> Metodología
+        </h3>
+        <div class="bg-slate-950/40 p-4 rounded-lg border border-slate-800 font-mono-code text-xs text-slate-300 whitespace-pre-line leading-relaxed" id="inf-metodologia"></div>
+      </section>
+
+      <!-- 4. HALLAZGOS PRINCIPALES -->
+      <section id="sec-hallazgos">
+        <h3 class="font-serif-official text-amber-400 font-bold text-base mb-2 flex items-center gap-2">
+          <span class="text-xs font-mono-code text-amber-500">4.</span> Hallazgos Principales
+        </h3>
+        <div class="bg-slate-950/40 p-4 rounded-lg border border-slate-800 text-slate-300 whitespace-pre-line leading-relaxed font-sans-body" id="inf-hallazgos"></div>
+      </section>
+
+      <!-- 5. CONCLUSIONES Y RECOMENDACIONES -->
+      <section id="sec-posologia">
+        <h3 class="font-serif-official text-amber-400 font-bold text-base mb-2 flex items-center gap-2">
+          <span class="text-xs font-mono-code text-amber-500">5.</span> Conclusiones y Recomendaciones
+        </h3>
+        <div class="bg-slate-950/40 p-4 rounded-lg border border-slate-800 text-slate-300 whitespace-pre-line leading-relaxed" id="inf-posologia"></div>
+      </section>
+
+    </div>
+
+    <!-- SELLO DE CIERRE INSTITUCIONAL -->
+    <footer class="mt-12 pt-6 border-t border-slate-800 flex flex-col sm:flex-row justify-between items-center text-xs font-mono-code text-slate-500 gap-4">
+      <div class="flex items-center gap-2">
+        <div class="w-3 h-3 rounded-full bg-emerald-500 animate-pulse"></div>
+        <span>DOCUMENTO OFICIAL SELLADO POR MACHOA</span>
+      </div>
+      <a href="index.html" class="text-amber-400 hover:text-amber-300 transition font-serif-official font-bold flex items-center gap-1">
+        ← Volver al Campus Virtual
+      </a>
+    </footer>
+
+  </article>
+
+  <!-- LÓGICA DE CONEXIÓN CON SUPABASE -->
+  <script>
+    // Sustituye con las credenciales de tu proyecto Supabase
+    const SUPABASE_URL = 'https://TU-PROYECTO.supabase.co';
+    const SUPABASE_ANON_KEY = 'TU-ANON-KEY';
+    
+    const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+    async function obtenerInforme() {
+      // 1. Extraer el parámetro ?id= de la URL
+      const urlParams = new URLSearchParams(window.location.search);
+      const informeId = urlParams.get('id');
+
+      if (!informeId) {
+        document.getElementById('loader').innerHTML = `
+          <div class="text-red-400 font-serif-official text-base">Error: No se ha especificado ningún código de expediente.</div>
+          <a href="index.html" class="inline-block mt-4 text-xs text-amber-400 hover:underline font-mono-code">← Regresar al Campus</a>
+        `;
+        return;
+      }
+
+      // 2. Consulta a la tabla 'informes_clinicos' en Supabase por ID
+      const { data, error } = await supabaseClient
+        .from('informes_clinicos')
+        .select('*')
+        .eq('id', informeId)
+        .single();
+
+      if (error || !data) {
+        document.getElementById('loader').innerHTML = `
+          <div class="text-red-400 font-serif-official text-base">Expediente N° ${informeId} no encontrado en el archivo central.</div>
+          <a href="index.html" class="inline-block mt-4 text-xs text-amber-400 hover:underline font-mono-code">← Regresar al Campus</a>
+        `;
+        return;
+      }
+
+      // 3. Inyectar datos en los elementos HTML correspondientes
+      document.getElementById('inf-facultad').innerText = data.facultad || '';
+      document.getElementById('inf-departamento').innerText = data.departamento || '';
+      document.getElementById('inf-codigo').innerText = data.codigo_decreto || `INFORME N° ${data.id}`;
+      document.getElementById('inf-fecha').innerText = data.fecha_dictamen || 'Fecha no registrada';
+      document.getElementById('inf-titulo').innerText = data.titulo || '';
+
+      if (data.investigadores) {
+        document.getElementById('inf-investigadores').innerText = data.investigadores;
+      } else {
+        document.getElementById('box-investigadores').classList.add('hidden');
+      }
+
+      document.getElementById('inf-resumen').innerText = data.resumen_ejecutivo || 'Sin información cargada.';
+      document.getElementById('inf-marco').innerText = data.marco_teorico || 'Sin marco teórico especificado.';
+      document.getElementById('inf-metodologia').innerText = data.metodologia || 'Metodología no registrada.';
+      document.getElementById('inf-hallazgos').innerText = data.hallazgos || 'Sin hallazgos principales.';
+      document.getElementById('inf-posologia').innerText = data.posologia || 'Sin posología o recomendación.';
+
+      // Cambiar título de la ventana del navegador
+      document.title = `${data.codigo_decreto || data.id} — Universidad de Mipalo`;
+
+      // Mostrar el documento renderizado
+      document.getElementById('loader').classList.add('hidden');
+      document.getElementById('expediente').classList.remove('hidden');
+    }
+
+    // Ejecutar al cargar la página
+    obtenerInforme();
+  </script>
+</body>
+</html>
