@@ -1,244 +1,184 @@
 <!DOCTYPE html>
-<html lang="es" class="scroll-smooth">
+<html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>QRDely - Menús Digitales Interactivos para Restaurantes</title>
-    <!-- Tailwind CSS (CDN para desarrollo rápido) -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Enlace a tu archivo de estilos personalizado -->
-    
-    <!-- Google Fonts: Inter -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Universidad de Mipalo — Repositorio Oficial & Campus Virtual</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;900&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+  <style>
+    .font-serif-official { font-family: 'Cinzel', serif; }
+    .font-sans-body { font-family: 'Inter', sans-serif; }
+    .bronze-card {
+      background: linear-gradient(135deg, #2a2421 0%, #1a1614 100%);
+      border: 1px solid #b8860b;
+    }
+  </style>
 </head>
-<body class="bg-slate-950 text-slate-100 font-['Inter',sans-serif] antialiased selection:bg-emerald-500 selection:text-slate-950">
+<body class="bg-slate-950 text-slate-100 font-sans-body min-h-screen flex flex-col justify-between">
 
-    <!-- HEADER / NAVBAR -->
-    <header class="fixed top-0 left-0 right-0 z-50 bg-slate-950/80 backdrop-blur-md border-b border-slate-800">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
-            <!-- Logo -->
-            <a href="#" class="flex items-center gap-2">
-                <span class="bg-emerald-500 text-slate-950 font-extrabold text-xl px-3 py-1 rounded-lg">QR</span>
-                <span class="text-xl font-bold tracking-tight">Dely<span class="text-emerald-500">.</span></span>
-            </a>
+  <!-- TOP HEADER GUBERNAMENTAL -->
+  <div class="bg-amber-600/10 border-b border-amber-500/20 text-amber-400 text-xs text-center py-1 tracking-widest uppercase">
+    Bajo la tutela del Gobierno Republicano de Machoa — República Académica Privada
+  </div>
 
-            <!-- Desktop Nav Links -->
-            <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-slate-300">
-                <a href="#beneficios" class="hover:text-emerald-400 transition">Beneficios</a>
-                <a href="#precios" class="hover:text-emerald-400 transition">Precios</a>
-                <a href="#sobre-mi" class="hover:text-emerald-400 transition">Sobre Mí / Contacto</a>
-            </nav>
-
-            <!-- Auth Buttons -->
-            <div class="hidden md:flex items-center gap-4">
-                <button id="openLoginBtn" class="text-sm font-semibold text-slate-300 hover:text-white transition px-4 py-2">
-                    Iniciar Sesión
-                </button>
-                <button id="openRegisterBtn" class="text-sm font-semibold bg-emerald-500 hover:bg-emerald-400 text-slate-950 transition px-4 py-2 rounded-xl shadow-lg shadow-emerald-500/20">
-                    Registrar mi Local
-                </button>
-            </div>
-
-            <!-- Mobile Menu Button -->
-            <button id="mobileMenuBtn" class="md:hidden text-slate-300 hover:text-white focus:outline-none">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
-                </svg>
-            </button>
+  <!-- NAVBAR -->
+  <header class="border-b border-slate-800 bg-slate-900/80 backdrop-blur sticky top-0 z-50">
+    <div class="max-w-6xl mx-auto px-4 py-4 flex flex-wrap justify-between items-center">
+      <div class="flex items-center space-x-3">
+        <div class="w-10 h-10 rounded-full border border-amber-500 flex items-center flex-shrink-0 justify-center bg-slate-950 font-serif-official text-amber-400 font-bold">
+          UM
         </div>
-
-        <!-- Mobile Menu Drawer (Oculto por defecto) -->
-        <div id="mobileMenu" class="hidden md:hidden bg-slate-900 border-b border-slate-800 px-4 pt-2 pb-6 space-y-3">
-            <a href="#beneficios" class="block text-slate-300 hover:text-emerald-400 py-2">Beneficios</a>
-            <a href="#precios" class="block text-slate-300 hover:text-emerald-400 py-2">Precios</a>
-            <a href="#sobre-mi" class="block text-slate-300 hover:text-emerald-400 py-2">Sobre Mí / Contacto</a>
-            <div class="pt-4 flex flex-col gap-3">
-                <button id="mobileLoginBtn" class="w-full py-2.5 text-center font-semibold text-slate-300 bg-slate-800 rounded-xl">Iniciar Sesión</button>
-                <button id="mobileRegisterBtn" class="w-full py-2.5 text-center font-semibold bg-emerald-500 text-slate-950 rounded-xl">Registrar mi Local</button>
-            </div>
+        <div>
+          <h1 class="font-serif-official text-lg text-slate-100 font-bold leading-tight">Universidad de Mipalo</h1>
+          <p class="text-xs text-slate-400">Campus Virtual & Repositorio Oficial</p>
         </div>
-    </header>
+      </div>
+      <nav class="flex space-x-6 text-sm text-slate-300 mt-4 sm:mt-0">
+        <a href="#facultades" class="hover:text-amber-400 transition">Facultades</a>
+        <a href="#informes" class="hover:text-amber-400 transition">Informes</a>
+        <a href="#honor" class="hover:text-amber-400 transition">Cuadro de Honor</a>
+        <a href="#secretaria" class="hover:text-amber-400 transition">Secretaría Legal</a>
+      </nav>
+    </div>
+  </header>
 
-    <!-- HERO SECTION -->
-    <section class="pt-32 pb-20 md:pt-44 md:pb-32 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto flex flex-col lg:flex-row items-center gap-12">
-        <div class="flex-1 text-center lg:text-left">
-            <div class="inline-flex items-center gap-2 bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-semibold px-3 py-1.5 rounded-full mb-6">
-                <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-                Adiós a los PDFs pesados en Google Drive
-            </div>
-            <h1 class="text-4xl sm:text-6xl font-extrabold tracking-tight leading-tight mb-6">
-                Menús Digitales <span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-teal-200">Ultra Rápidos</span> con QR
-            </h1>
-            <p class="text-lg text-slate-400 mb-8 max-w-2xl mx-auto lg:mx-0">
-                Optimiza tu restaurante, cafetería o puesto de comida. Permite que tus clientes escaneen un código QR y vean tu carta al instante en sus teléfonos, con opción de pedidos directos a tu WhatsApp.
-            </p>
-            <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
-                <button onclick="document.getElementById('openRegisterBtn').click()" class="w-full sm:w-auto bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold px-8 py-4 rounded-xl shadow-lg shadow-emerald-500/20 transition">
-                    Crea tu Menú Gratis
-                </button>
-                <a href="#beneficios" class="w-full sm:w-auto bg-slate-900 hover:bg-slate-800 text-slate-300 font-semibold px-6 py-4 rounded-xl border border-slate-800 transition text-center">
-                    Ver cómo funciona
-                </a>
-            </div>
-        </div>
-        <!-- Vista previa visual / Mockup -->
-        <div class="flex-1 w-full max-w-md lg:max-w-none">
-            <div class="bg-gradient-to-tr from-emerald-500/20 to-teal-500/5 p-2 rounded-3xl border border-slate-800 shadow-2xl">
-                <div class="bg-slate-900 rounded-2xl p-6 text-center border border-slate-800">
-                    <div class="w-16 h-16 bg-emerald-500/10 text-emerald-400 rounded-2xl mx-auto flex items-center justify-center text-2xl font-bold mb-4">📱</div>
-                    <h3 class="font-bold text-xl mb-2">Carga Instantánea</h3>
-                    <p class="text-sm text-slate-400 mb-6">Optimizado para abrirse en menos de 1 segundo incluso con conexiones lentas de datos móviles.</p>
-                    <div class="bg-slate-950 p-4 rounded-xl border border-slate-800/80 text-left space-y-2">
-                        <div class="flex justify-between text-xs text-slate-500 font-mono">
-                            <span>Mesa 04 - Pedido Activo</span>
-                            <span class="text-emerald-400">Enviado a WhatsApp</span>
-                        </div>
-                        <div class="text-sm font-medium text-slate-200">1x Hamburguesa Doble Queso ($8.00)</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+  <!-- HERO SECTION -->
+  <section class="max-w-4xl mx-auto px-4 py-16 text-center">
+    <div class="inline-block border border-amber-500/40 rounded-full px-4 py-1 text-xs text-amber-400 tracking-wider uppercase mb-6 bg-amber-500/5">
+      Proyección • Despecho • Catatonia
+    </div>
+    <h2 class="font-serif-official text-4xl sm:text-5xl font-bold text-slate-100 mb-6 leading-tight">
+      Validación Médica para las Crisis Nocturnas
+    </h2>
+    <p class="text-slate-400 text-base sm:text-lg mb-8 leading-relaxed max-w-2xl mx-auto">
+      Institución académica de élite dedicada al estudio riguroso, científico y cínico del overthinking, la soltería imaginaria y la inercia existencial centenial.
+    </p>
 
-    <!-- SECCIÓN DE BENEFICIOS -->
-    <section id="beneficios" class="py-20 bg-slate-900/50 border-t border-slate-900">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center max-w-3xl mx-auto mb-16">
-                <h2 class="text-3xl font-bold tracking-tight mb-4">¿Por qué elegir QRDely frente a un PDF?</h2>
-                <p class="text-slate-400">Diseñado específicamente para aumentar las ventas locales y agilizar la atención del mesero.</p>
-            </div>
-            <div class="grid md:grid-cols-3 gap-8">
-                <!-- Tarjeta 1 -->
-                <div class="bg-slate-900 border border-slate-800 p-8 rounded-2xl">
-                    <div class="w-12 h-12 bg-emerald-500/10 text-emerald-400 rounded-xl flex items-center justify-center font-bold text-xl mb-6">⚡</div>
-                    <h3 class="text-lg font-bold mb-3">Cero esperas y sin descargas</h3>
-                    <p class="text-sm text-slate-400">No requiere instalar ninguna aplicación. El cliente escanea con la cámara de su teléfono y la carta abre al vuelo.</p>
-                </div>
-                <!-- Tarjeta 2 -->
-                <div class="bg-slate-900 border border-slate-800 p-8 rounded-2xl">
-                    <div class="w-12 h-12 bg-emerald-500/10 text-emerald-400 rounded-xl flex items-center justify-center font-bold text-xl mb-6">🔄</div>
-                    <h3 class="text-lg font-bold mb-3">Modo "Agotado" en 1 Clic</h3>
-                    <p class="text-sm text-slate-400">¿Se acabó un plato? Desactívalo desde tu panel al instante para que ningún cliente lo pida por error.</p>
-                </div>
-                <!-- Tarjeta 3 -->
-                <div class="bg-slate-900 border border-slate-800 p-8 rounded-2xl">
-                    <div class="w-12 h-12 bg-emerald-500/10 text-emerald-400 rounded-xl flex items-center justify-center font-bold text-xl mb-6">💬</div>
-                    <h3 class="text-lg font-bold mb-3">Pedidos Directos a WhatsApp</h3>
-                    <p class="text-sm text-slate-400">El cliente arma su orden en la mesa y se envía formateada automáticamente al WhatsApp del local o caja.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- SECCIÓN DE PRECIOS (Con Plan Intermedio / Efecto Señuelo) -->
-    <section id="precios" class="py-20 border-t border-slate-900">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center max-w-3xl mx-auto mb-16">
-                <h2 class="text-3xl font-bold tracking-tight mb-4">Planes sencillos y transparentes</h2>
-                <p class="text-slate-400">Sin comisiones ocultas por pedido. Elige el nivel ideal para tu negocio.</p>
-            </div>
-            <div class="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-                
-                <!-- Plan Free -->
-                <div class="bg-slate-900 border border-slate-800 p-8 rounded-3xl flex flex-col justify-between">
-                    <div>
-                        <h3 class="text-xl font-bold mb-2">Plan Gratuito</h3>
-                        <p class="text-slate-400 text-sm mb-6">Para pequeños puestos que inician.</p>
-                        <div class="text-4xl font-extrabold mb-6">$0 <span class="text-sm font-normal text-slate-400">/ siempre</span></div>
-                        <ul class="space-y-3 text-sm text-slate-300 mb-8">
-                            <li class="flex items-center gap-2">✓ Hasta 15 productos</li>
-                            <li class="flex items-center gap-2">✓ Menú digital básico</li>
-                            <li class="flex items-center gap-2 text-slate-500">✕ Sin fotos en los platos</li>
-                            <li class="flex items-center gap-2 text-slate-500">✕ Sin botón agotado</li>
-                        </ul>
-                    </div>
-                    <button class="w-full bg-slate-800 hover:bg-slate-700 font-semibold py-3 rounded-xl transition">Empezar Gratis</button>
-                </div>
-
-                <!-- Plan Emprendedor (Intermedio / El Elegido) -->
-                <div class="bg-gradient-to-b from-emerald-500/15 to-slate-900 border-2 border-emerald-500 p-8 rounded-3xl flex flex-col justify-between relative shadow-2xl scale-105 z-10">
-                    <div class="absolute -top-3.5 right-8 bg-emerald-500 text-slate-950 font-extrabold text-xs uppercase px-3.5 py-1 rounded-full shadow-md">Más Popular</div>
-                    <div>
-                        <h3 class="text-xl font-bold mb-2 text-emerald-400">Plan Emprendedor</h3>
-                        <p class="text-slate-400 text-sm mb-6">Todo lo esencial para vender sin límites.</p>
-                        <div class="text-4xl font-extrabold mb-6">$5 <span class="text-sm font-normal text-slate-400">/ mes</span></div>
-                        <ul class="space-y-3 text-sm text-slate-200 mb-8 font-medium">
-                            <li class="flex items-center gap-2 text-emerald-400 font-bold">✓ Productos ilimitados</li>
-                            <li class="flex items-center gap-2">✓ Fotos en alta resolución</li>
-                            <li class="flex items-center gap-2">✓ Interruptor "Agotado" en 1 clic</li>
-                            <li class="flex items-center gap-2">✓ Código QR descargable</li>
-                        </ul>
-                    </div>
-                    <button class="w-full bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold py-3.5 rounded-xl transition shadow-lg shadow-emerald-500/25">Elegir Emprendedor</button>
-                </div>
-
-                <!-- Plan Pro / Premium -->
-                <div class="bg-slate-900 border border-slate-800 p-8 rounded-3xl flex flex-col justify-between">
-                    <div>
-                        <h3 class="text-xl font-bold mb-2">Plan Pro Total</h3>
-                        <p class="text-slate-400 text-sm mb-6">Para locales que buscan automatización total.</p>
-                        <div class="text-4xl font-extrabold mb-6">$12 <span class="text-sm font-normal text-slate-400">/ mes</span></div>
-                        <ul class="space-y-3 text-sm text-slate-300 mb-8">
-                            <li class="flex items-center gap-2">✓ Todo lo del Emprendedor</li>
-                            <li class="flex items-center gap-2">✓ Pedidos directos a WhatsApp con carrito</li>
-                            <li class="flex items-center gap-2">✓ Personalización de colores y logo</li>
-                            <li class="flex items-center gap-2">✓ Soporte prioritario 24/7</li>
-                        </ul>
-                    </div>
-                    <button class="w-full bg-slate-800 hover:bg-slate-700 font-semibold py-3 rounded-xl transition">Elegir Pro</button>
-                </div>
-
-            </div>
-        </div>
-    </section>
-
-    <!-- SECCIÓN SOBRE MÍ / CONTACTO (Tu Vitrina Profesional) -->
-    <section id="sobre-mi" class="py-20 bg-slate-900/30 border-t border-slate-900">
-        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h2 class="text-3xl font-bold tracking-tight mb-4">¿Quién hay detrás de QRDely?</h2>
-            <p class="text-slate-400 mb-8 max-w-2xl mx-auto">
-                Desarrollador Full-Stack especializado en crear soluciones web rápidas, funcionales y orientadas a resultados reales para negocios. ¿Buscas un desarrollo a medida o una web para tu empresa? Hablemos.
-            </p>
-            <div class="inline-flex flex-wrap justify-center gap-4">
-                <a href="mailto:tucorreo@example.com" class="bg-slate-900 hover:bg-slate-800 border border-slate-800 px-6 py-3 rounded-xl font-medium text-sm transition flex items-center gap-2">
-                    ✉️ Enviar un Correo
-                </a>
-                <a href="https://github.com" target="_blank" class="bg-slate-900 hover:bg-slate-800 border border-slate-800 px-6 py-3 rounded-xl font-medium text-sm transition flex items-center gap-2">
-                    💻 Ver GitHub / Proyectos
-                </a>
-            </div>
-        </div>
-    </section>
-
-    <!-- FOOTER -->
-    <footer class="py-8 border-t border-slate-900 text-center text-xs text-slate-500">
-        <p>&copy; 2026 QRDely. Todos los derechos reservados. Creado con pasión para potenciar negocios locales.</p>
-    </footer>
-
-    <!-- MODAL DE LOGIN / REGISTRO (Estructura base oculta) -->
-    <div id="authModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-slate-950/80 backdrop-blur-sm p-4">
-        <div class="bg-slate-900 border border-slate-800 w-full max-w-md p-8 rounded-3xl relative shadow-2xl">
-            <button id="closeModalBtn" class="absolute top-6 right-6 text-slate-400 hover:text-white">✕</button>
-            <h3 id="modalTitle" class="text-2xl font-bold mb-2">Iniciar Sesión</h3>
-            <p id="modalSubtitle" class="text-sm text-slate-400 mb-6">Accede a tu panel de restaurante.</p>
-            
-            <form id="authForm" class="space-y-4">
-                <div>
-                    <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">Correo electrónico</label>
-                    <input type="email" id="authEmail" required class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-sm text-slate-100 focus:outline-none focus:border-emerald-500 transition" placeholder="tucorreo@negocio.com">
-                </div>
-                <div>
-                    <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">Contraseña</label>
-                    <input type="password" id="authPassword" required class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-sm text-slate-100 focus:outline-none focus:border-emerald-500 transition" placeholder="••••••••">
-                </div>
-                <button type="submit" id="authSubmitBtn" class="w-full bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold py-3.5 rounded-xl transition">Entrar</button>
-            </form>
-        </div>
+    <!-- BANNER ADMISIÓN -->
+    <div class="p-4 rounded-lg bg-red-950/30 border border-red-500/30 text-red-300 text-sm max-w-xl mx-auto mb-8">
+      <strong>⚠️ Advertencia de Admisión:</strong> Solo se acepta a la crema y nata de los sobrepensadores. El cardio del alma es asignatura obligatoria.
     </div>
 
-    <!-- Enlace al archivo JavaScript -->
-    
-    <script type="module" src="script.js"> </script>
+    <a href="#informes" class="inline-block bg-amber-600 hover:bg-amber-500 text-slate-950 font-semibold px-6 py-3 rounded-md transition font-serif-official text-sm tracking-wide">
+      Consultar Último Informe Clínico
+    </a>
+  </section>
+
+  <!-- FACULTADES E INFORMES -->
+  <section id="facultades" class="max-w-6xl mx-auto px-4 py-12 border-t border-slate-900">
+    <h3 class="font-serif-official text-2xl text-amber-400 font-bold mb-8 text-center">
+      Facultades & Expedientes Clínicos
+    </h3>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6" id="informes">
+      
+      <!-- INFORME 404-C -->
+      <div class="bg-slate-900 border border-slate-800 rounded-lg p-6 hover:border-amber-500/50 transition">
+        <span class="text-xs font-mono text-amber-400 uppercase tracking-widest block mb-2">Informe N° 404-C</span>
+        <h4 class="font-serif-official text-xl font-bold mb-2 text-slate-100">Síndrome de Proyección Romántica</h4>
+        <p class="text-slate-400 text-sm mb-4">
+          Validación clínica del síndrome de proyectarse al presenciar parejas en la vía pública o Reels de desamor a altas horas de la noche.
+        </p>
+        <div class="text-xs text-slate-500 border-t border-slate-800 pt-3">
+          Depto: Análisis de Escenarios Delusorios
+        </div>
+      </div>
+
+      <!-- INFORME 406-D -->
+      <div class="bg-slate-900 border border-slate-800 rounded-lg p-6 hover:border-amber-500/50 transition">
+        <span class="text-xs font-mono text-amber-400 uppercase tracking-widest block mb-2">Informe N° 406-D</span>
+        <h4 class="font-serif-official text-xl font-bold mb-2 text-slate-100">Teorema de Ocupación Afectiva</h4>
+        <p class="text-slate-400 text-sm mb-4">
+          Demostración empírica de cómo tener pareja anula automáticamente el carnet de sociópata romántico en TikTok.
+        </p>
+        <div class="text-xs text-slate-500 border-t border-slate-800 pt-3">
+          Depto: Realismo Afectivo
+        </div>
+      </div>
+
+      <!-- INFORME 407-E -->
+      <div class="bg-slate-900 border border-slate-800 rounded-lg p-6 hover:border-amber-500/50 transition">
+        <span class="text-xs font-mono text-amber-400 uppercase tracking-widest block mb-2">Informe N° 407-E</span>
+        <h4 class="font-serif-official text-xl font-bold mb-2 text-slate-100">Longevidad e Hidratación del Alma</h4>
+        <p class="text-slate-400 text-sm mb-4">
+          Correlación directa entre cantar a pulmón herido himnos de Belanova o Ana Gabriel y la extensión de 7 a 10 años de esperanza de vida.
+        </p>
+        <div class="text-xs text-slate-500 border-t border-slate-800 pt-3">
+          Facultad: Geriatría Emocional y Dramaturgia Musical
+        </div>
+      </div>
+
+      <!-- INFORME 408-F -->
+      <div class="bg-slate-900 border border-slate-800 rounded-lg p-6 hover:border-amber-500/50 transition">
+        <span class="text-xs font-mono text-amber-400 uppercase tracking-widest block mb-2">Informe N° 408-F</span>
+        <h4 class="font-serif-official text-xl font-bold mb-2 text-slate-100">Protector de Pantalla Mental (45 Min)</h4>
+        <p class="text-slate-400 text-sm mb-4">
+          Análisis del estado catatónico: 45 minutos sentado en la orilla de la cama con una rolita triste de fondo antes de iniciar la jornada.
+        </p>
+        <div class="text-xs text-slate-500 border-t border-slate-800 pt-3">
+          Depto: Inercia Matutina y Nocturna
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CUADRO DE HONOR -->
+  <section id="honor" class="max-w-6xl mx-auto px-4 py-12 border-t border-slate-900">
+    <div class="text-center mb-10">
+      <h3 class="font-serif-official text-3xl text-amber-400 font-bold mb-2">Cuadro de Honor</h3>
+      <p class="text-slate-400 text-sm">Placa conmemorativa de leyendas intocables del overthinking</p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+      
+      <div class="bronze-card rounded-lg p-6 text-center relative overflow-hidden">
+        <div class="text-amber-500 font-serif-official text-xs uppercase tracking-widest mb-2">Expediente Ilustre N° 001</div>
+        <h4 class="font-serif-official text-2xl font-bold text-amber-200 mb-1">Nicolás Estelar</h4>
+        <p class="text-amber-400/80 text-xs italic mb-4">Doctorado Honoris Causa en Miradas al Vacío</p>
+        <p class="text-slate-300 text-sm leading-relaxed">
+          Reconocido por sostener la fijación visual en el punto nulo durante más de 3 horas continuas sin parpadear ante dilemas imaginarios.
+        </p>
+      </div>
+
+      <div class="bronze-card rounded-lg p-6 text-center relative overflow-hidden">
+        <div class="text-amber-500 font-serif-official text-xs uppercase tracking-widest mb-2">Expediente Ilustre N° 002</div>
+        <h4 class="font-serif-official text-2xl font-bold text-amber-200 mb-1">Alberto Instantáneo</h4>
+        <p class="text-amber-400/80 text-xs italic mb-4">Especialista en Respuestas Automáticas de Medianoche</p>
+        <p class="text-slate-300 text-sm leading-relaxed">
+          Premio a la velocidad de respuesta soplada por el insomnio y la redacción de mensajes reflexivos a las 2:00 a.m.
+        </p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- SECRETARÍA LEGAL DE MACHOA -->
+  <section id="secretaria" class="max-w-4xl mx-auto px-4 py-12 border-t border-slate-900">
+    <div class="bg-slate-900/60 border border-slate-800 rounded-lg p-8">
+      <h3 class="font-serif-official text-2xl text-amber-400 font-bold mb-4">Secretaría Legal & Decretos</h3>
+      <p class="text-slate-400 text-sm mb-6">
+        Bajo normativa explícita del <strong>Gobierno Republicano de Machoa</strong>, queda estrictamente prohibido el uso de canciones tristes a las 2:00 a.m. si el ciudadano dispone de pareja estable.
+      </p>
+      
+      <form class="space-y-4" onsubmit="event.preventDefault(); alert('Solicitud de beca enviada a evaluación del Decanato.');">
+        <h4 class="text-slate-200 font-semibold text-sm">Solicitud de Beca de Sobrepensador</h4>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <input type="text" placeholder="Nombre completo / Alias" class="bg-slate-950 border border-slate-800 rounded px-4 py-2 text-sm text-slate-200 focus:outline-none focus:border-amber-500" required>
+          <input type="text" placeholder="Nivel de Overthinking (1-100)" class="bg-slate-950 border border-slate-800 rounded px-4 py-2 text-sm text-slate-200 focus:outline-none focus:border-amber-500" required>
+        </div>
+        <button type="submit" class="w-full bg-slate-800 hover:bg-slate-700 text-amber-400 border border-amber-500/30 py-2.5 rounded text-sm font-semibold transition">
+          Enviar Postulación al Decanato
+        </button>
+      </form>
+    </div>
+  </section>
+
+  <!-- FOOTER GUBERNAMENTAL -->
+  <footer class="border-t border-slate-900 py-6 text-center text-xs text-slate-600">
+    © 2026 Universidad de Mipalo — Bajo la tutela del Gobierno Republicano de Machoa. Todos los derechos reservados.
+  </footer>
+
 </body>
-    </html>
-    
+</html>
