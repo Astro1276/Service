@@ -71,23 +71,28 @@
     </a>
   </section>
 
-  <!-- FACULTADES & EXPEDIENTES CLÍNICOS (DINÁMICOS DESDE SUPABASE + BUSCADOR) -->
+  <!-- FACULTADES & EXPEDIENTES CLÍNICOS (DINÁMICOS DESDE SUPABASE + BUSCADOR INSENSIBLE Y FILTRO) -->
   <section id="facultades" class="max-w-6xl mx-auto px-4 py-12 border-t border-slate-900">
     <div class="text-center mb-8">
       <h3 class="font-serif-official text-2xl sm:text-3xl text-amber-400 font-bold mb-2">Facultades & Expedientes Clínicos</h3>
       <p class="text-slate-400 text-xs sm:text-sm">Bandeja oficial sincronizada con el repositorio de Supabase</p>
     </div>
 
-    <!-- BUSCADOR DE INFORMES -->
-    <div class="max-w-xl mx-auto mb-10">
-      <div class="relative">
-        <input type="text" id="buscadorInformes" placeholder="🔍 Buscar por ID (ej. 408-F), título o departamento..." class="w-full bg-slate-900 border border-slate-800 rounded-lg px-4 py-3 pl-10 text-sm text-slate-200 focus:outline-none focus:border-amber-500 shadow-lg">
+    <!-- CONTROLES DE BÚSQUEDA Y FILTRADO POR FACULTAD -->
+    <div class="max-w-3xl mx-auto mb-10 flex flex-col sm:flex-row gap-4">
+      <div class="flex-1 relative">
+        <input type="text" id="buscadorInformes" placeholder="🔍 Buscar por ID, título, departamento..." class="w-full bg-slate-900 border border-slate-800 rounded-lg px-4 py-3 text-sm text-slate-200 focus:outline-none focus:border-amber-500 shadow-lg">
+      </div>
+      <div class="sm:w-1/3">
+        <select id="filtroFacultad" class="w-full bg-slate-900 border border-slate-800 rounded-lg px-4 py-3 text-sm text-slate-200 focus:outline-none focus:border-amber-500 shadow-lg font-sans-body">
+          <option value="TODAS">Todas las Facultades</option>
+          <!-- Las opciones se generan dinámicamente según Supabase -->
+        </select>
       </div>
     </div>
 
     <!-- CONTENEDOR DE TARJETAS DINÁMICAS -->
     <div id="gridInformes" class="grid grid-cols-1 md:grid-cols-2 gap-6">
-      <!-- Los informes se cargan automáticamente aquí mediante JavaScript -->
       <div class="col-span-2 text-center py-12 text-amber-400/80 font-mono-code text-xs animate-pulse">
         Conectando con el archivo central de Machoa...
       </div>
@@ -214,7 +219,7 @@
     <div class="bg-slate-900/60 border border-slate-800 rounded-xl p-6 sm:p-8 shadow-xl">
       <h3 class="font-serif-official text-2xl text-amber-400 font-bold mb-4">Secretaría Legal & Decretos</h3>
       <p class="text-slate-400 text-sm mb-6 leading-relaxed">
-        Bajo normativa explícita del <strong>Gobierno Republicano de Machoa</strong>, queda estrictamente prohibido reproducir canciones tristes a las 2:00 a.m. si el ciudadano dispone de pareja estable. El incumplimiento amerita el decomiso del carnet de sociópata.
+        Bajo normativa explícita del <strong>Gobierno Republicano de Machoa</strong>, queda strictly prohibido reproducir canciones tristes a las 2:00 a.m. si el ciudadano dispone de pareja estable. El incumplimiento amerita el decomiso del carnet de sociópata.
       </p>
       
       <form class="space-y-4" onsubmit="event.preventDefault(); alert('Solicitud de beca enviada a evaluación del Decanato de Machoa.');">
@@ -235,21 +240,30 @@
     © 2026 Universidad de Mipalo — Bajo la tutela del Gobierno Republicano de Machoa. Todos los derechos reservados.
   </footer>
 
-  <!-- SCRIPTS DE CARGA DESDE SUPABASE Y BUSCADOR -->
+  <!-- SCRIPTS DE CARGA DESDE SUPABASE, FILTRADO Y BUSCADOR NORMALIZADO -->
   <script>
-    // Credenciales de Supabase (reemplazar con las del proyecto)
+    // Credenciales de Supabase
     const SUPABASE_URL = 'https://bmiweaeaznxxidlyaftu.supabase.co';
     const SUPABASE_ANON_KEY = 'sb_publishable_n7R-U2YdVX7fSYVQN1E_Fw_m4atV42Q';
     const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
     let listaInformes = [];
 
+    // Helper para remover tildes y convertir a minúsculas
+    function normalizarTexto(str) {
+      if (!str) return '';
+      return str
+        .toLowerCase()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "");
+    }
+
     async function cargarInformesDesdeSupabase() {
       const grid = document.getElementById('gridInformes');
       
       const { data, error } = await supabaseClient
         .from('informes_clinicos')
-        .select('id, titulo, departamento, codigo_decreto, resumen_ejecutivo');
+        .select('id, titulo, facultad, departamento, codigo_decreto, resumen_ejecutivo');
 
       if (error || !data || data.length === 0) {
         grid.innerHTML = `<div class="col-span-2 text-center text-red-400 font-mono-code text-xs">No se encontraron expedientes en el archivo central de Machoa.</div>`;
@@ -257,7 +271,20 @@
       }
 
       listaInformes = data;
-      renderizarInformes(listaInformes);
+      poblarFiltroFacultades(data);
+      aplicarFiltros();
+    }
+
+    function poblarFiltroFacultades(informes) {
+      const select = document.getElementById('filtroFacultad');
+      const facultadesUnicas = [...new Set(informes.map(i => i.facultad).filter(Boolean))];
+      
+      facultadesUnicas.forEach(fac => {
+        const opt = document.createElement('option');
+        opt.value = fac;
+        opt.innerText = fac;
+        select.appendChild(opt);
+      });
     }
 
     function renderizarInformes(informes) {
@@ -291,19 +318,35 @@
       });
     }
 
-    // Buscador en tiempo real
-    document.getElementById('buscadorInformes').addEventListener('input', (e) => {
-      const query = e.target.value.toLowerCase().trim();
-      const filtrados = listaInformes.filter(inf => 
-        inf.id.toLowerCase().includes(query) ||
-        inf.titulo.toLowerCase().includes(query) ||
-        (inf.departamento && inf.departamento.toLowerCase().includes(query)) ||
-        (inf.codigo_decreto && inf.codigo_decreto.toLowerCase().includes(query))
-      );
-      renderizarInformes(filtrados);
-    });
+    function aplicarFiltros() {
+      const queryNormalizado = normalizarTexto(document.getElementById('buscadorInformes').value);
+      const facultadSeleccionada = document.getElementById('filtroFacultad').value;
 
-    // Ejecutar al cargar la página
+      const filtrados = listaInformes.filter(inf => {
+        const coincideFacultad = facultadSeleccionada === 'TODAS' || inf.facultad === facultadSeleccionada;
+
+        const idNorm = normalizarTexto(inf.id);
+        const tituloNorm = normalizarTexto(inf.titulo);
+        const deptoNorm = normalizarTexto(inf.departamento);
+        const decNorm = normalizarTexto(inf.codigo_decreto);
+
+        const coincideBusqueda = 
+          idNorm.includes(queryNormalizado) ||
+          tituloNorm.includes(queryNormalizado) ||
+          deptoNorm.includes(queryNormalizado) ||
+          decNorm.includes(queryNormalizado);
+
+        return coincideFacultad && coincideBusqueda;
+      });
+
+      renderizarInformes(filtrados);
+    }
+
+    // Eventos para el buscador y el select
+    document.getElementById('buscadorInformes').addEventListener('input', aplicarFiltros);
+    document.getElementById('filtroFacultad').addEventListener('change', aplicarFiltros);
+
+    // Carga inicial
     cargarInformesDesdeSupabase();
 
     // --- LÓGICA DEL CARNETIZADOR ---
@@ -332,21 +375,4 @@
       cardNivel.innerText = `${nivelVal}%`;
 
       const card = document.getElementById('carnetCard');
-      card.classList.add('scale-105', 'border-amber-400');
-      setTimeout(() => {
-        card.classList.remove('scale-105', 'border-amber-400');
-      }, 300);
-    }
-
-    inputNombre.addEventListener('input', () => {
-      cardNombre.innerText = inputNombre.value.trim() || 'Astro1276';
-    });
-
-    inputFacultad.addEventListener('change', () => {
-      cardFacultad.innerText = `Facultad de ${inputFacultad.value}`;
-    });
-  </script>
-
-</body>
-      </html>
-                                                                                                          
+      card.classList.add('scale-105', 'border-amber-400')
